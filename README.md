@@ -20,8 +20,8 @@ The following paper describe details of the local structure classification.
 
 ## Introduction
 <p align="justify">
-  ADD ABSTRACT OF THE PAPER and NICE FIGURE HERE
-
+  Classifying the local polymorphic structures of molecular materials is a challenging task for both simulation and experiment. We demonstrate a novel approach to for characterizing the local environments in different polymorphs using symmetry function representations. We develop and train a model based on a symmetry function representation, encoding information about the local environment for each molecule. We demonstrate very high classification accuracy for the approach on urea and nicotinamide crystal polymorphs, and extensions to clusters and interfaces. This approach could be applied to new molecules and different complex topologies, providing insights into complex condensed matter phenomena.
+  
 </p>
  
 ## Requirement
