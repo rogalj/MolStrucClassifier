@@ -1,0 +1,75 @@
+#-------------------------------------------------------------------------------#
+#
+#  This is the lammps input file
+#
+#-------------------------------------------------------------------------------#
+
+
+#--------------------------- General Variables ---------------------------------#
+  variable          nx     equal 5      # System size.
+  variable          ny     equal 2      # System size.
+  variable          nz     equal 2      # System size.
+  variable          T      equal 300    # Temperature
+  variable          rnd    equal 1     # seed for random velocities
+  variable          t_run  equal 10     # number of MD steps
+  variable          t_print equal ${t_run}/1  #how often to print histogram
+#-------------------------------------------------------------------------------#
+#------------------------- Load initial setup ----------------------------------#
+  # load function definition
+  include "system.init"
+
+  # read system setup (positions, connectivity,...)
+  read_data "system.data"
+
+  # load force field parameters
+  include "system.settings"
+#-------------------------------------------------------------------------------#
+#-------------------------------------------------------------------------------#
+  minimize          1.0e-5 1.0e-7 1000 10000
+
+  replicate         ${nx} ${ny} ${nz}
+#---------------------- Print out original system ------------------------------#
+  write_data        nicotinamide_${nx}x${ny}x${nz}_unrelaxed.data
+#-------------------------------------------------------------------------------#
+#------------------ Computes, variables & modifications ------------------------#
+  variable          step    equal step
+  variable          time    equal time
+  variable          temp    equal temp
+  variable          press   equal press
+  variable          etot    equal etotal
+  variable          ftemp   format temp "%10.3f"
+  variable          fpress  format press "%.6e"
+  variable          fetot   format etot "%.6e"
+#-------------------------------------------------------------------------------#
+#--------------------------- Thermo style and settings -------------------------#
+  thermo_style      custom step time temp press vol etotal epair emol 
+  thermo_modify     format float "%15.6f"
+  thermo_modify     format 2 "%10.3f"
+  thermo_modify     format 6 "%.6e"
+  thermo_modify     format 7 "%.6e"
+  thermo_modify     format 8 "%.6e"
+  thermo_modify     flush yes
+  timestep          1.0
+  thermo            100
+#---------------------- Thermostat & Barostat ----------------------------------#
+  fix               f2 all nvt temp $T $T $(100.0*dt)
+
+#---------------------- NEW COMPUTE TESTING ------------------------------------#
+  group             ca2ca1  type 10 9
+  group             cn  type 4 6
+
+  compute           cnicochunk  all chunk/atom molecule
+
+  compute           cCa2Ca1pos  all  vector/chunk cnicochunk 10 9 
+  compute           cCNpos  all  vector/chunk cnicochunk 4 6
+  compute           cG2G3  all  G2G3gen/vecchunk 9 cCa2Ca1pos cCNpos 7.0 12   #ID  groupID  style  arg1(type1(for symf))  arg2(vecpos1)  arg3(vecpos2)  arg4(cutoff)
+  fix               extra3 all ave/time 1 1 ${t_print} c_cG2G3[*] file G2G3.dat mode vector
+#-------------------------------------------------------------------------------#
+  compute	    c1 all pe
+  
+  velocity          all create $T ${rnd} mom yes rot yes dist gaussian
+
+  dump              d1 all custom 10 traj.dump id mol element x y z vx vy vz
+  dump_modify       d1 element Ha Hn O C Ca N Nb H4 Ca1 Ca2
+  run               ${t_run}
+  write_data        nicotinamide_${nx}x${ny}x${nz}_equi.data

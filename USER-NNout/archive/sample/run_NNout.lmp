@@ -1,0 +1,59 @@
+#-------------------------------------------------------------------------------#
+#
+#  This is the lammps input file
+#
+#-------------------------------------------------------------------------------#
+#--------------------------- General Variables ---------------------------------#
+  variable          nx     equal 1      # System size.
+  variable          ny     equal 1      # System size.
+  variable          nz     equal 1      # System size.
+  variable          T      equal 200    # Temperature
+  variable          rnd    equal 42     # seed for random velocities
+  variable          t_run  equal 100000     # number of MD steps
+  variable	    ainmol equal 8	#atoms per molecule
+  variable          t_print equal ${t_run}/10  #how often to print histogram
+#-------------------------------------------------------------------------------#
+#------------------------- Load initial setup ----------------------------------#
+  include "system.init"
+  read_data "system.data"
+  # load force field parameters
+  include "system.settings"
+#-------------------------------------------------------------------------------#
+  replicate         ${nx} ${ny} ${nz}
+#---------------------- Thermostat & Barostat ----------------------------------#
+  fix               f2 all nvt temp $T $T $(100.0*dt) mtk yes
+#-------------------------------------------------------------------------------#
+  velocity          all create $T ${rnd} mom yes rot yes dist gaussian
+  write_data        urea_${nx}x${ny}x${nz}_equi.data
+  compute CNN  all nnoutgen/atom 3 24
+#-------------------------------------------------------------------------------#
+#------------------ Computes, variables & modifications ------------------------#
+  variable          step    equal step
+  variable          time    equal time
+  variable          temp    equal temp
+  variable          press   equal press
+  variable          etot    equal etotal
+  variable          ftemp   format temp "%10.3f"
+  variable          fpress  format press "%.6e"
+  variable          fetot   format etot "%.6e"
+
+#-------------------------------------------------------------------------------#
+#--------------------------- Thermo style and settings -------------------------#
+  thermo_style      custom step time temp press vol etotal epair emol 
+  thermo_modify     format float "%15.6f"
+  thermo_modify     format 2 "%10.3f"
+  thermo_modify     format 6 "%.6e"
+  thermo_modify     format 7 "%.6e"
+  thermo_modify     format 8 "%.6e"
+  thermo_modify     flush yes
+  timestep          1.0
+  thermo            100
+#-------------------------------------------------------------------------------#
+  fix               f4 all print 100 "${step}   ${time} ${ftemp}   ${fpress}   ${fetot}" &
+                    screen no file thermo_run.txt &
+                    title "# step   time[fs]   T[K]   P[atm]   Etot[kcal/mol]"
+  dump              d1 all custom 100 traj.dump id mol element x y z vx vy vz fx fy fz c_CNN[*]
+  dump_modify       d1 element 1 2 3 4 5 6 7 8 9 10
+  run               ${t_run}
+  write_data        urea_${nx}x${ny}x${nz}_final.data
+#-------------------------------------------------------------------------------#

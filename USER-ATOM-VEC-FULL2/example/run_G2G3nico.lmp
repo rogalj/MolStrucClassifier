@@ -1,0 +1,57 @@
+#-------------------------------------------------------------------------------#
+#
+#  This is the lammps input file
+#
+#-------------------------------------------------------------------------------#
+
+
+#--------------------------- General Variables ---------------------------------#
+  variable          nx     equal 1      # System size.
+  variable          ny     equal 1      # System size.
+  variable          nz     equal 1      # System size.
+  variable          T      equal 100    # Temperature
+  variable          rnd    equal 1     # seed for random velocities
+  variable          t_run  equal 1     # number of MD steps
+  variable          t_print equal ${t_run}/1  #how often to print histogram
+#-------------------------------------------------------------------------------#
+
+
+#------------------------- Load initial setup ----------------------------------#
+  # load function definition
+  include "system.init"
+
+  # read system setup (positions, connectivity,...)
+  read_data "system.data"
+
+  # load force field parameters
+  include "system.settings"
+  kspace_style    pppm 0.0001
+#-------------------------------------------------------------------------------#
+  velocity          all create $T ${rnd} mom yes rot yes dist gaussian
+#------------------ Computes, variables & modifications ------------------------#
+  variable          step    equal step
+  variable          time    equal time
+  variable          temp    equal temp
+  variable          press   equal press
+  variable          etot    equal etotal
+  variable          ftemp   format temp "%10.3f"
+  variable          fpress  format press "%.6e"
+  variable          fetot   format etot "%.6e"
+#--------------------------- Thermo style and settings -------------------------#
+  thermo_style      custom step time temp press vol etotal epair emol 
+  thermo_modify     format float "%15.6f"
+  thermo_modify     format 2 "%10.3f"
+  thermo_modify     format 6 "%.6e"
+  thermo_modify     format 7 "%.6e"
+  thermo_modify     format 8 "%.6e"
+  thermo_modify     flush yes
+  timestep          1.0
+  thermo            100
+#---------------------- Thermostat & Barostat ----------------------------------#
+  fix               f2 all npt temp $T $T $(100.0*dt) iso 0.0 0.0 $(1000.0*dt) 
+#------------------------ Compute for RDF --------------------------------------#
+  velocity          all create $T ${rnd} mom yes rot yes dist gaussian
+
+  dump              d1 all custom 1000 traj.dump id mol element sym_type x y z vx vy vz
+  dump_modify       d1 element 1 2 3 4 5 6 7 8 
+  run               ${t_run}

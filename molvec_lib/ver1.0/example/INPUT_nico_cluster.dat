@@ -1,0 +1,65 @@
+
+#In this file you need to write symmetry function parameters. Please do not write in first 16 spaces 
+
+
+
+
+num_sf           24                     //This should be the sum of number_of_para
+num_pvsf_type    2                      //number of point vector symmetry function type()
+COvectype        10 9			//This is for prototype function. The code will run without this line.
+NNvectype        4 6			//This is for prototype too.
+triclinic        false			//true if tye system is triclinic. false if not.
+center atom      9			//"center atom in the molecule. This need to be unique
+atm in molec     16			//number of atoms in the molecule
+cutoffmin        6.8			//cutoff rmin
+cutoffmax        7.0			//cutoff rmax
+symf_calc_or_NN  NN			//symf_calc: calculate only symmetry function and print out in symf_result.txt. NN: calculate NN using the existing weight file.
+NNrdf            true			//Calculate the distance from surface. true for yes, false for no
+fullNeigh        7			//Number of neighbors the form usually get. You can adjust this number to change the surface info.
+
+#Make sure you have all the information
+#This the following part as a block.
+#Each set needs number of parameter for the symmetry function.
+#if ut us ub point representation, make point as true. if not, make sure you put vec_id.
+#This need to be unique too.
+#Then put if it is using G2 or G3 symf. Put the right set and number of parameters there.
+
+number_of_para   4
+point            true
+G2G3             G2
+Rs               3.75 4.86 4.9 5.9
+eta              1.26 2.11 0.1 0.016
+
+number_of_para   4
+point            false
+vec_id           10 9
+G2G3             G2
+Rs               0.01 2.71 2.9 1.69
+eta              0.66 1.11 0.9 4.0
+
+number_of_para   4
+point            false
+vec_id           4 6
+G2G3             G2
+Rs               0.56 2.26 1.18 1.15
+eta              3.0 1.11 17.2 2.2
+
+number_of_para   4
+point            true
+G2G3             G3
+kappa            1.06 0.51 1.03 2.41
+
+number_of_para   4
+point            false
+vec_id           10 9
+G2G3             G3
+kappa            0.13 7.91 5.05 3.2
+
+
+number_of_para   4
+point            false
+vec_id           4 6
+G2G3             G3
+kappa            1.05 2.21 2.36 13.22
+
+#rdiff            0.2			#default value is 0.2

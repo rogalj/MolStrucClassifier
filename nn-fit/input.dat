@@ -1,0 +1,43 @@
+------------------------------------------------------------------------------------
+         Input File for neural network fit
+------------------------------------------------------------------------------------
+# initial seed for random number generator (>0)
+# if seed <= 0 a random seed between 1 and 1000 is generated
+ran_seed          123	
+
+# network architecture
+hidden layers     2 		! number of hidden layers
+input             14 		! number of input features
+hidden nodes      25 25  	! number of nodes in each hidden layer (one number for each layer)
+output            5 		! number of outputs
+activation        1         ! activation function for output layer, 0=sigmoid, 1=softmax
+
+# parallel threads
+nthreads          4
+
+# simulation setup
+run option        0        	! 1=train with new weights, -1=train with old weight; 0=test job
+iterations        250         	! maximum number of training iterations
+optimizer max     200    	! maximum number of optimizer steps
+save frequency    1  		! how often the results are saved
+
+train input       train.dat     ! name of file containing training data
+test input        test_A15.dat      ! name of file containing test data
+test output       output.dat    ! name of file for test output
+test error        error.dat     ! name of file for test error result (misclassified)
+
+
+weights input     weights_old.dat   ! name of file containing previous weights
+weights output    weights.dat   ! name of file to print new fitted weights
+cost output       cost.dat      ! name of the file to save values of cost function file fitting
+
+
+
+!-----------------------------------------------------------------------------------
+! FORMAT OF THE INPUT FILE:
+! the first 3 lines are simply read in as string
+! the rest is parsed and identified over a string
+! !IMPORTANT!  The first 16 (!) characters are reserved for the key word!!
+! after this different parameter in one line must be separated by at least on space
+! (lines starting with '#' are read as text string and just printed out) <- just comments now
+! lines starting with '!' are comments

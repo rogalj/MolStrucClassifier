@@ -1,0 +1,148 @@
+#-------------------------------------------------------------------------------#
+#
+#  This is the lammps input file
+#
+#-------------------------------------------------------------------------------#
+
+
+#--------------------------- General Variables ---------------------------------#
+  variable          nx     equal 1      # System size.
+  variable          ny     equal 1      # System size.
+  variable          nz     equal 1      # System size.
+  variable          T      equal 200    # Temperature
+  variable          rnd    equal 42     # seed for random velocities
+  variable          t_run  equal 100000     # number of MD steps
+  variable	    ainmol equal 8	#atoms per molecule
+  variable          t_print equal ${t_run}/10  #how often to print histogram
+#-------------------------------------------------------------------------------#
+
+
+#------------------------- Load initial setup ----------------------------------#
+  include "system.init"
+
+#  read_data "urea_polyI.data"
+#  read_data "nico_test.data"
+#  read_data "nico_test_periodic.data"
+#  read_data "Test_2aoutput.dat"
+#  read_data "Test_output.dat"
+  read_data "new_system.data"
+#  read_data "Test_2aoutput_flipmol.dat"
+#  read_data "ureabig.data"
+
+  # load force field parameters
+  include "system.settings"
+#-------------------------------------------------------------------------------#
+#-------------------------------------------------------------------------------#
+#  group Urea_mobile region mobile
+#  group Urea_mobile include molecule
+
+  replicate         ${nx} ${ny} ${nz}
+  
+#------------------------ Relax box and internal coordinates -------------------#
+#  fix               f1 all box/relax aniso 0.0
+#  minimize          1.0e-5 1.0e-7 1000 10000
+#  write_data        urea_${nx}x${ny}x${nz}_relaxed.data 
+#  unfix             f1
+#-------------------------------------------------------------------------------#
+#  compute Tall all temp
+#  compute Tmobile Urea_mobile temp
+#---------------------- Thermostat & Barostat ----------------------------------#
+#  fix               f2 all npt temp $T $T $(100.0*dt) iso 0.0 0.0 $(1000.0*dt) 
+#  fix               f2 Urea_mobile nvt temp $T $T $(100.0*dt) mtk yes
+  fix               f2 all nvt temp $T $T $(100.0*dt) mtk yes
+#-------------------------------------------------------------------------------#
+
+  velocity          all create $T ${rnd} mom yes rot yes dist gaussian
+#  run               1
+  write_data        nicotinamide_${nx}x${ny}x${nz}_equi.data
+
+
+#  unfix f2
+
+
+#  reset_timestep    0
+#---------------------- This is for making wall---------------------------------#
+#  fix		    wallhi all wall/harmonic zhi 89.1 1.0 1.0 2.5 units box
+#  fix		    walllo all wall/harmonic zlo 37.5 1.0 1.0 2.5 units box
+#---------------------- NEW COMPUTE TESTING ------------------------------------#
+#  group             oc  type 2 3
+#  group             nn  type 4 5
+  
+#  compute           cUchunk  all chunk/atom molecule
+
+#------compute vector is from type1 -> type2  
+#  compute           cCOpos  all  vector/chunk cUchunk 3 2 
+#  compute           cNNpos  all  vector/chunk cUchunk 4 5
+
+#  compute           cG2G3  all  G2G3gen/vecchunk 3 cCOpos cNNpos 10.0 24   #ID  groupID  style  arg1(type1(for symf))  arg2(vecpos1)  arg3(vecpos2)  arg4(cutoff)
+#  compute           cG2G3  all  G2G3gen/vecchunk 3 cCOpos cNNpos 2 1   #ID  groupID  style  arg1(type1(for symf))  arg2(vecpos1)  arg3(vecpos2)  arg4(cutoff)
+#  fix               extra3 all ave/time 1 1 ${t_print} c_cG2G3[*] file G2G3.dat mode vector
+#  compute CNN  all nnoutgen/atom 3 cutoff 7.0 24
+  compute CNN  all nnoutgen/atom 9 24
+#-------------------------------------------------------------------------------#
+
+
+#------------------ Computes, variables & modifications ------------------------#
+  variable          step    equal step
+  variable          time    equal time
+  variable          temp    equal temp
+  variable          press   equal press
+  variable          etot    equal etotal
+  variable          ftemp   format temp "%10.3f"
+  variable          fpress  format press "%.6e"
+  variable          fetot   format etot "%.6e"
+#  variable	    tmpt    equal "c_Tmobile"
+#  variable	    tmpall  equal "c_Tall"
+
+#-------------------------------------------------------------------------------#
+
+
+#--------------------------- Thermo style and settings -------------------------#
+  thermo_style      custom step time temp press vol etotal epair emol 
+  thermo_modify     format float "%15.6f"
+  thermo_modify     format 2 "%10.3f"
+  thermo_modify     format 6 "%.6e"
+  thermo_modify     format 7 "%.6e"
+  thermo_modify     format 8 "%.6e"
+  thermo_modify     flush yes
+  timestep          1.0
+  thermo            100
+
+#-------------------------------------------------------------------------------#
+
+
+
+
+#------------------------ Compute for RDF --------------------------------------#
+#  compute           crdf all rdf 200 3 3 2 2
+#  fix               f3 all ave/time 2 500 ${t_run} c_crdf[*] file rdf_${T}K.dat mode vector
+#-------------------------------------------------------------------------------#
+
+
+#------------------------ Running the simulation -------------------------------#
+#  velocity          all create $T ${rnd} mom yes rot yes dist gaussian
+#  reset_timestep    0
+    
+#  fix		    1 all dafedgen outfile dAFED.log dafedfile dAFED.in totalsymf 24
+#  fix               f2 Urea_mobile npt temp $T $T $(100.0*dt) z 0.0 0.0 $(1000.0*dt) couple none	#npzt
+
+
+
+  fix               f4 all print 100 "${step}   ${time} ${ftemp}   ${fpress}   ${fetot}" &
+                    screen no file thermo_run.txt &
+                    title "# step   time[fs]   T[K]   P[atm]   Etot[kcal/mol]"
+
+#  dump              d1 all custom 1 traj.dump id mol element x y z vx vy vz fx fy fz f_1[*]
+#  dump              d1 all custom 1 traj.dump id mol element x y z vx vy vz fx fy fz 
+  dump              d1 all custom 100 traj.dump id mol element x y z vx vy vz fx fy fz c_CNN[*]
+  dump_modify       d1 element 1 2 3 4 5 6 7 8 9 10
+
+  run               ${t_run}
+#------------------------ set output of trajectory -----------------------------#
+#  dump              d1 all custom 100 traj.dump id mol element x y z vx vy vz fx fy fz c_CNN[*]
+#-------------------------------------------------------------------------------#
+
+  write_data        nicotinamide_${nx}x${ny}x${nz}_final.data
+
+#-------------------------------------------------------------------------------#
+

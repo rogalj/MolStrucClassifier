@@ -1,0 +1,10 @@
+  atom_style full2
+  units           real
+  bond_style      hybrid harmonic
+  angle_style     hybrid harmonic
+  dihedral_style  hybrid fourier
+  improper_style  hybrid harmonic
+  pair_style      hybrid lj/charmm/coul/long 9.0 10.0
+  pair_modify     mix arithmetic
+  kspace_style    pppm 0.0001
+  special_bonds   amber

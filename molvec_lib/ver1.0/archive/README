@@ -1,0 +1,38 @@
+In order to run the stand alone code, you first need to do the following. 
+If you have your own data, you need the following information. 
+
+1. single frame trajectory dump file
+2. weight file for the neural network
+3. INPUT.dat file that contains molecule and symmetry function information. 
+
+make command will create sa
+./sa dump_file lammps_vec will compute the file in main file.
+
+If you make a new file or edit the existing file, don't forget to add on Make file and recompile it
+
+
+If you want to connect with lammps, check our mannual how to do. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

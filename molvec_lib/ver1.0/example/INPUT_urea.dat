@@ -1,0 +1,63 @@
+
+#In this file you need to write symmetry function parameters. Please do not write in first 16 spaces 
+
+
+
+
+num_sf           24                     //This should be the sum of number_of_para
+num_pvsf_type    2                      //number of point vector symmetry function type()
+COvectype        3 2			//This is for prototype function. The code will run without this. 
+NNvectype        4 5			//This is for prototype too. 
+triclinic        false			//true if tye system is triclinic. false if not/ 
+center atom      3			//"center atom in the molecule. This need to be unique
+atm in molec     8			//number of atoms in the molecule
+cutoffmin        9.8			//cutoff rmin
+cutoffmax        10.0			//cutoff rmax
+symf_calc_or_NN  NN		//symf_calc: calculate only symmetry function and print out in symf_result.txt. NN: calculate NN using the existing weight file.
+
+
+#Make sure you have all the information
+#This the following part as a block. 
+#Each set needs number of parameter for the symmetry function. 
+#if ut us ub point representation, make point as true. if not, make sure you put vec_id. THis need to be unique too.
+#Then put if it is using G2 or G3 symf. Put the right set and number of parameters there. 
+number_of_para   4
+point            true
+G2G3             G2
+Rs               6.16 6.28 6.76 6.88    
+eta              2.44 2.68 1.0 1.0
+
+number_of_para   4
+point            false
+vec_id           3 2
+G2G3             G2
+Rs               0.36 0.08 0.36 0.28
+eta              1.0 1.0 1.12 6.76
+
+number_of_para   4
+point            false
+vec_id           4 5
+G2G3             G2
+Rs               -0.64 -0.36 0.88 1.0
+eta              3.28 3.28 3.28 3.28
+
+
+number_of_para   4
+point            true
+G2G3             G3
+kappa            2.5 4.54 4.9 6.22
+
+number_of_para   4
+point            false
+vec_id           3 2
+G2G3             G3
+kappa            2.5 3.58 4.78 8.26
+
+
+number_of_para   4
+point            false
+vec_id           4 5
+G2G3             G3
+kappa            2.50 8.12 8.24 8.36
+
+#rdiff            0.2			#default value is 0.2

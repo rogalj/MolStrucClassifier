@@ -1,0 +1,31 @@
+#In this file you need to write symmetry function parameters. Please do not write in first 16 spaces 
+G2 point         4
+G2p Rs           6.16 6.28 6.76 6.88	#This is test
+G2p eta          2.44 2.68 1.0 1.0
+
+G2 point vec1    4
+G2v1 Rs          0.36 0.08 0.36 0.28
+G2v1 eta         1.0 1.0 1.12 6.76
+
+G2 point vec2    4
+G2v2 Rs          -0.64 -0.36 0.88 1.0
+G2v2 eta         3.28 3.28 3.28 3.28
+
+G3 point         4
+G3p kappa        2.5 4.54 4.9 6.22
+
+G3 point vec1    4
+G3v1 kappa       2.5 3.58 4.78 8.26
+
+
+G3 point vec2    4
+G3v2 kappa       2.50 8.12 8.24 8.36
+
+
+center_atom      3
+atm_in_molec     8
+num_of_NN_out    6
+eleOfvec1        3 2 
+eleOfvec2        4 5
+cutoff           10
+cutoff_diff      0.2

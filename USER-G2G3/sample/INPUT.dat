@@ -1,0 +1,25 @@
+#In this file you need to write symmetry function parameters. Please do not write in first 16 spaces 
+G2 point         2			#write a number of G2 point symmetry function
+G2p Rs           3.75 5.25		#Write Rs value. Make sure you write the same amount of Rs as one line above
+G2p eta          1.26 0.01		#Write eta value. Make sure you write the same amount of eta as one line above
+
+G3 point         2			#write a number of G3 point symmetry function
+G3p kappa        1.6 0.51		#Write kappa value. Make sure you write the same amount of kappa as one line above
+
+
+G2 point vec1    2			#write a number of G2 point vector1 symmetry function
+G2v1 Rs          0.01 1.66		#Write Rs value. Make sure you write the same amount of Rs as one line above
+G2v1 eta         0.66 0.01		#Write eta value. Make sure you write the same amount of eta as one line above
+
+G2 point vec2    2			#write a number of G2 point vector2 symmetry function
+G2v2 Rs          0.56 3.0		#Write Rs value. Make sure you write the same amount of Rs as one line above
+G2v2 eta         0.66 0.01		#Write eta value. Make sure you write the same amount of eta as one line above
+
+G3 point vec1    2			#write a number of G3 point vector1 symmetry function
+G3v1 kappa       0.13 0.33		#Write kappa value. Make sure you write the same amount of kappa as one line above
+
+
+G3 point vec2    2			#write a number of G3 point vector2 symmetry function
+G3v2 kappa       1.05 0.57		#Write kappa value. Make sure you write the same amount of kappa as one line above
+
+#rdiff            0.2			#default value is 0.2

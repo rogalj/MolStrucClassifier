@@ -1,0 +1,31 @@
+#In this file you need to write symmetry function parameters. Please do not write in first 16 spaces 
+G2 point         4
+G2p Rs           1.0 1.0 1.0 1.0 
+G2p eta          1.0 1.0 1.0 1.0
+
+G3 point         4
+G3p kappa        1 1 1 1
+
+
+G2 point vec1    4
+G2v1 Rs          1 1 1 1
+G2v1 eta         1.0 1.0 1 1
+
+G2 point vec2    4
+G2v2 Rs          1 1 1 1.0
+G2v2 eta         1 1 1 1
+
+G3 point vec1    4
+G3v1 kappa       1 1 1 1
+
+
+G3 point vec2    4
+G3v2 kappa       1 1 1 1
+
+COvectype        10 9
+NNvectype        4 6
+triclinic        true
+center atom      9
+atm in molec     15
+cutoffmax        6.8
+cutoffmin        7.0

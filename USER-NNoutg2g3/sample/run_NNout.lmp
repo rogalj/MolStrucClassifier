@@ -1,0 +1,124 @@
+#-------------------------------------------------------------------------------#
+#
+#  This is the lammps input file
+#
+#-------------------------------------------------------------------------------#
+
+
+#--------------------------- General Variables ---------------------------------#
+  variable          nx     equal 1      # System size.
+  variable          ny     equal 1      # System size.
+  variable          nz     equal 1      # System size.
+  variable          T      equal 200    # Temperature
+  variable          rnd    equal 42     # seed for random velocities
+  variable          t_run  equal 10000     # number of MD steps
+  variable	    ainmol equal 8	#atoms per molecule
+  variable          t_print equal ${t_run}/10  #how often to print histogram
+#-------------------------------------------------------------------------------#
+
+
+#------------------------- Load initial setup ----------------------------------#
+  include "urea.init"
+
+  read_data "restart_file_for_weight.data"
+
+  # load force field parameters
+  include "urea.settings"
+#-------------------------------------------------------------------------------#
+#-------------------------------------------------------------------------------#
+  region surfacelo block INF INF INF INF 160.688 166.214
+  region surfacehi block INF INF INF INF 103.497 107.123
+  region mobile block INF INF INF INF 109.021 157.991
+  group freezehi region surfacehi
+  group freezehi include molecule
+  group freezelo region surfacelo
+  group freezelo include molecule
+  group Urea_mobile region mobile
+  group Urea_mobile include molecule
+
+  
+  compute Tall all temp
+  compute Tmobile Urea_mobile temp
+#---------------------- Thermostat & Barostat ----------------------------------#
+#  fix               f2 all npt temp $T $T $(100.0*dt) iso 0.0 0.0 $(1000.0*dt) 
+#  fix               f2 Urea_mobile nvt temp $T $T $(100.0*dt) mtk yes
+#-------------------------------------------------------------------------------#
+
+#  velocity          all create $T ${rnd} mom yes rot yes dist gaussian
+#  run               10000
+#  write_data        urea_${nx}x${ny}x${nz}_equi.data
+
+
+#  unfix f2
+
+
+  reset_timestep    0
+#---------------------- This is for making wall---------------------------------#
+#  fix		    wallhi all wall/harmonic zhi 89.1 1.0 1.0 2.5 units box
+#  fix		    walllo all wall/harmonic zlo 37.5 1.0 1.0 2.5 units box
+#---------------------- NEW COMPUTE TESTING ------------------------------------#
+  
+  compute CNN  all nnoutg2g3gen/atom 3 24 0.4 #center-atom num_of_symmetry_function prob_error. (0.4 means 60% or more enviornment are misclassified)
+#-------------------------------------------------------------------------------#
+
+
+#------------------ Computes, variables & modifications ------------------------#
+  variable          step    equal step
+  variable          time    equal time
+  variable          temp    equal temp
+  variable          press   equal press
+  variable          etot    equal etotal
+  variable          ftemp   format temp "%10.3f"
+  variable          fpress  format press "%.6e"
+  variable          fetot   format etot "%.6e"
+  variable	    tmpt    equal "c_Tmobile"
+  variable	    tmpall  equal "c_Tall"
+
+#-------------------------------------------------------------------------------#
+
+
+#--------------------------- Thermo style and settings -------------------------#
+  thermo_style      custom step time c_Tall c_Tmobile press vol etotal epair emol 
+  thermo_modify     format float "%15.6f"
+  thermo_modify     format 2 "%10.3f"
+  thermo_modify     format 7 "%.6e"
+  thermo_modify     format 8 "%.6e"
+  thermo_modify     format 9 "%.6e"
+  thermo_modify     flush yes
+  timestep          1.0
+  thermo            100
+
+#-------------------------------------------------------------------------------#
+
+
+
+
+#------------------------ Compute for RDF --------------------------------------#
+#  compute           crdf all rdf 200 3 3 2 2
+#  fix               f3 all ave/time 2 500 ${t_run} c_crdf[*] file rdf_${T}K.dat mode vector
+#-------------------------------------------------------------------------------#
+
+
+#------------------------ Running the simulation -------------------------------#
+#  velocity          all create $T ${rnd} mom yes rot yes dist gaussian
+  reset_timestep    0
+    
+#  fix		    1 all dafed outfile dAFED.log dafedfile dAFED.in ainmol ${ainmol}
+  fix               f2 Urea_mobile npt temp $T $T $(100.0*dt) z 0.0 0.0 $(1000.0*dt) couple none	#npzt
+#------------------------ set output of trajectory -----------------------------#
+  dump              d1 all custom 1000 traj.dump id mol element x y z vx vy vz fx fy fz c_CNN[*]
+  dump_modify       d1 element H O C N1 N2
+#-------------------------------------------------------------------------------#
+
+
+
+  fix               f4 all print 1000 "${step}   ${time} ${ftemp}   ${fpress}   ${fetot}" &
+                    screen no file thermo_run.txt &
+                    title "# step   time[fs]   T[K]   P[atm]   Etot[kcal/mol]"
+
+  run               ${t_run}
+
+  write_data        urea_${nx}x${ny}x${nz}_final.data
+
+#-------------------------------------------------------------------------------#
+
