@@ -27,7 +27,7 @@ The following paper describe details of the local structure classification.
 ## Requirement
 
 <p align="justify">
-  This package requires C++ compilar. 
+  This package requires C++ compiler. 
   Environments under intel 19.1.2 was tested 
 </p>
 
