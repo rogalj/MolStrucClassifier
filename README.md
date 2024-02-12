@@ -40,7 +40,7 @@ The following paper describe details of the local structure classification.
   To install classifierCVs code, 
   
   ```bash
-git clone git@gitgub.com:rogalj/classifierCVs.git
+git clone git@github.com:rogalj/classifierCVs.git
 ```
 Before you run the code make sure you load the c++ environment. 
 
