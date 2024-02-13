@@ -18,7 +18,7 @@ This is the sample line
 ## Output
 
 After you run the code, you will get g2g3output-0.dat. 
-This file contains neural network output results for each molecule.
+This file contains symmetry function and neural network results for each molecule.
 
 
 
