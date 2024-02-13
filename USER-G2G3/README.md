@@ -6,7 +6,7 @@
   
   In this directory, we have a compute command that can calculate the symmetry function and two more compute commands which is used for symmetry function calculation. 
   In addition to run file, you need INPUT.dat. Check the sample code carefully and run the command. 
-  This command currently takes two point-vector respresntation.
+  This command currently takes two point-vector respresntations.
 
 ```bash
     compute  ID  groupID  chunk/atom molecule
