@@ -21,7 +21,7 @@ This is the sample line
 ## Output
 
 After you run the code, you will get g2g3output-0.dat, g2g3good-0.dat, g2g3error-0.dat as output. 
-These files contains symmetry function results for each molecule. output contains all information, good contains correctly classified information, error contains misclassified information.
+These files contains symmetry function and neural network results for each molecule. output contains all information, good contains correctly classified information, error contains misclassified information.
 
 
 
