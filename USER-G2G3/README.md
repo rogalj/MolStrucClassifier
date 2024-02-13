@@ -16,8 +16,8 @@
 This is the sample line 
 ```bash
     compute  cUchunk  all chunk/atom molecule
-    compute  cCOpos  all  vector/chunk cUchunk 3 2
-    compute  cNNpos  all  vector/chunk cUchunk 4 5
+    compute  cCOpos  all  vector/chunk cUchunk 10 9
+    compute  cNNpos  all  vector/chunk cUchunk 4 6
     compute  cG2G3  all  G2G3gen/vecchunk  9  cCa2Ca1pos  cCNpos  7.0 24   
 ```
 
