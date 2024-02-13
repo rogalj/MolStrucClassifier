@@ -27,7 +27,7 @@ The following paper describe details of the local structure classification.
 ## Requirement
 
 <p align="justify">
-  This package requires C++ compilar. 
+  This package requires C++ compiler. 
   Environments under intel 19.1.2 was tested 
 </p>
 
@@ -40,7 +40,7 @@ The following paper describe details of the local structure classification.
   To install classifierCVs code, 
   
   ```bash
-git clone git@gitgub.com:rogalj/classifierCVs.git
+git clone git@github.com:rogalj/classifierCVs.git
 ```
 Before you run the code make sure you load the c++ environment. 
 
@@ -59,7 +59,7 @@ make
 
 ### General Set Up
 <p align="justify">
-  If you already have a dataset with parameters, copy the dataset, neural network weight file, and INPUT file to the working directory. This code accepts a dump file as input trajectory data. In the dump file, you need to have a unique number (sym_type) assigned to atoms, which is used for center of the molecule and point vector representation. For example, urea has 8 atoms. Let's say we use carbon, oxygen, and two nitrogens for the center of the molecule and point vector representations; we can assign 1 for carbon, 2 for oxygen, 3 for the first nitrogen, 4 for the second nitrogen, and 0 for rest of atoms. If you use LAMMPS, we have codes that read/write data file and codes that write dump file with sym_type information. Check the <a class="reference external" href="https://github.com/rogalj/classifierCVs/tree/main/USER-ATOM-VEC-FULL2">USER-ATOM-VEC-FULL2 directory</a> 
+  If you already have a dataset with parameters, copy the dataset, neural network weight file, and INPUT file to the working directory. This code accepts a dump file as input trajectory data. In the dump file, you need to have a unique number (sym_type) assigned to atoms, which is used for center of the molecule and point vector representation. For example, urea has 8 atoms. Let's say we use carbon, oxygen, and two nitrogens for the center of the molecule and point vector representations; we can assign 1 for carbon, 2 for oxygen, 3 for the first nitrogen, 4 for the second nitrogen, and 0 for rest of atoms. If you use LAMMPS, we have codes that read/write data file and codes that write dump file with sym_type information. Check the <a class="reference external" href="https://github.com/rogalj/MolStrucClassifier/tree/main/USER-ATOM-VEC-FULL2">USER-ATOM-VEC-FULL2 directory</a> 
   After you build the program using make, you can submit the code as following.
 
 For the orthogonal system, 
