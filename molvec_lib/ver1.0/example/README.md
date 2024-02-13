@@ -3,10 +3,8 @@ When you run, you first need to mak sure you have the following packages or some
 tested environments
 |----------------------|
 |intel/19.1.2          |
-|----------------------|
 |openmpi/intel/4.1.1   |
-|----------------------|
-make
+
 
 Then before you run make sure you have the right weight file. If you use urea example copy weight_urea.txt as weight.txt. If you use nicotinamide, copy weight_nicotinamide.txt as weight.txt
 The following is the sample code for running urea and nicotinamide. 
