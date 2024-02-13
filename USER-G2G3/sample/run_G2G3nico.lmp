@@ -62,7 +62,7 @@
 
   compute           cCa2Ca1pos  all  vector/chunk cnicochunk 10 9 
   compute           cCNpos  all  vector/chunk cnicochunk 4 6
-  compute           cG2G3  all  G2G3gen/vecchunk 9 cCa2Ca1pos cCNpos 7.0 12   #ID  groupID  style  arg1(type1(for symf))  arg2(vecpos1)  arg3(vecpos2)  arg4(cutoff)
+  compute           cG2G3  all  G2G3gen/vecchunk 9 cCa2Ca1pos cCNpos 7.0 24   #ID  groupID  style  arg1(type1(for symf))  arg2(vecpos1)  arg3(vecpos2)  arg4(cutoff)
   fix               extra3 all ave/time 1 1 ${t_print} c_cG2G3[*] file G2G3.dat mode vector
 #-------------------------------------------------------------------------------#
   compute	    c1 all pe
