@@ -11,14 +11,14 @@
 ```bash
     compute  ID  groupID  chunk/atom molecule
     compute  ID  groupID  vector/chunk cUchunk atomtype1 atomtype2
-    compute  ID  groupID  G2G3gen/vecchunk  arg1(type1(for symf))  arg2(vecpos1)  arg3(vecpos2)  arg4(cutoff)
+    compute  ID  groupID  G2G3gen/vecchunk  center_atom_type  ID_of_vector/chunk1  ID_of_vector/chunk2  cutoff_distance total_symmetry_function_number
 ```
 This is the sample line 
 ```bash
     compute  cUchunk  all chunk/atom molecule
     compute  cCOpos  all  vector/chunk cUchunk 3 2
     compute  cNNpos  all  vector/chunk cUchunk 4 5
-    compute  cG2G3  all  G2G3gen/vecchunk  9  cCa2Ca1pos  cCNpos  7.0 12   
+    compute  cG2G3  all  G2G3gen/vecchunk  9  cCa2Ca1pos  cCNpos  7.0 24   
 ```
 
 ## Output
