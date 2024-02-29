@@ -18,6 +18,17 @@ This is the sample line for Atoms information.
 ```
 In the system.init file, you need to change the atom_style to full2. (first line in the file)
 
+**run_G2G3nico.lmp**: This file contains the simulation detail. 
+
+**system.data**: This data contains atoms information such as coordinate, box size, masses, charges etc. 
+
+**system.init**: This file contains the function detail of the system
+
+**system.settings**L This file contains force field information.
+
+**DK_job.slurm**: slurm file that calls LAMMPS. 
+
+
 > [!NOTE]
 > When you make the sym_type, you need to have a unique number for the one you use for the symmetry function calculation. For others, you can use the same number. In this example, I used 0 for atoms that I did not use for the calculation.
 
