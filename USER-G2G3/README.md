@@ -23,8 +23,13 @@ This is the sample line
 
 ## Output
 
-After you run the code, you will get g2g3func-0.dat as output. This file contains symmetry function results for each molecule. 
+After you run the code, you will get the following files. 
 
+**g2g3func-n.dat***: This file contains symmetry function results for each molecule. n is the number of the cores used in the simulation. 
+
+**log.lammps** and **screen.log**: Lammps log file.
+
+**traj.dump**: This file contains trajectory information of the system. 
 
 
 </p>
