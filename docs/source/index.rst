@@ -32,8 +32,6 @@ Symmetry function code and Lammps code
    Parameters
    Sample
 
-.. toctree::
-   usage
 
 Indices and tables
 ==================

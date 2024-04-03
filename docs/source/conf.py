@@ -21,9 +21,9 @@ from datetime import date
 
 # -- Project information -----------------------------------------------------
 
-project = 'Classification path CV'
-copyright = '2020-{}, Jutta Rogal'.format(date.today().year)
-author = 'Jutta Rogal'
+project = 'MolStrucClassifier'
+copyright = '2020-{}, Daisuke Kuroshima, Jutta Rogal'.format(date.today().year)
+author = 'Daisuke Kuroshima, Jutta Rogal'
 
 
 # -- General configuration ---------------------------------------------------

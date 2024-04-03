@@ -7,7 +7,7 @@ The code can be found in the folder
 
 .. code:: console
 
-    classifierCVs/nn-fit
+    MolStrucClassifier/nn-fit
 
 
 
