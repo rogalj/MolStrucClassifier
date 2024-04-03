@@ -1634,7 +1634,7 @@ void DAFED::get_vec_symmetry_output(CAtom *atoms, Cmolpoint *molec,int &natoms, 
 	for(mi=0;mi<nmol;++mi)       //loop over all molecules
 	{
 		for (i = 0; i < nsfg; ++i)
-			symf_file << atoms[molec[mi].center].sfg[i] << " ";
+			symf_file << atoms[molec[mi].center].sfg[i] << "    ";
 		symf_file << endl;
 	}
 

@@ -1,0 +1,192 @@
+LAMMPS (24 Mar 2022)
+Reading data file ...
+  triclinic box = (0 0 0) to (3.7525 12.279682 12.370303) with tilt (1.0311537 0.98390367 4.076536)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  60 atoms
+  scanning bonds ...
+  3 = max bonds/atom
+  scanning angles ...
+  3 = max angles/atom
+  scanning dihedrals ...
+  9 = max dihedrals/atom
+  scanning impropers ...
+  2 = max impropers/atom
+  reading bonds ...
+  60 bonds
+  reading angles ...
+  88 angles
+  reading dihedrals ...
+  112 dihedrals
+  reading impropers ...
+  28 impropers
+Finding 1-2 1-3 1-4 neighbors ...
+  special bond factors lj:    0        0        0.5     
+  special bond factors coul:  0        0        0.8333333333333334
+     3 = max # of 1-2 neighbors
+     6 = max # of 1-3 neighbors
+    11 = max # of 1-4 neighbors
+    13 = max # of special neighbors
+  special bonds CPU = 0.000 seconds
+  read_data CPU = 0.052 seconds
+WARNING: Using 'neigh_modify every 1 delay 0 check yes' setting during minimization (../min.cpp:187)
+  generated 45 of 45 mixed pair_coeff terms from arithmetic mixing rule
+Neighbor list info ...
+  update every 1 steps, delay 0 steps, check yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 1 3 3
+  1 neighbor lists, perpetual/occasional/extra = 1 0 0
+  (1) pair lj/charmm/coul/charmm, perpetual
+      attributes: half, newton on
+      pair build: half/bin/newton/tri
+      stencil: half/bin/3d/tri
+      bin: standard
+Setting up cg style minimization ...
+  Unit style    : real
+  Current step  : 0
+WARNING: Bond/angle/dihedral extent > half of periodic box length (../domain.cpp:944)
+Per MPI rank memory allocation (min/avg/max) = 12.82 | 12.82 | 12.82 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -409.76077      243.29684     -166.46393      110235.97    
+         6   0             -403.6691       25.012819     -378.65628      13464.779    
+WARNING: Bond/angle/dihedral extent > half of periodic box length (../domain.cpp:944)
+Loop time of 0.0384254 on 1 procs for 6 steps with 60 atoms
+
+99.5% CPU use with 1 MPI tasks x no OpenMP threads
+
+Minimization stats:
+  Stopping criterion = linesearch alpha is zero
+  Energy initial, next-to-last, final = 
+     -166.463930791204   -378.65628296385   -378.65628296385
+  Force two-norm initial, final = 717.30947 45.408773
+  Force max component initial, final = 109.23387 11.96642
+  Final line search alpha, max atom move = 4.2213498e-12 5.0514444e-11
+  Iterations, force evaluations = 6 72
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.03591    | 0.03591    | 0.03591    |   0.0 | 93.45
+Bond    | 0.0012579  | 0.0012579  | 0.0012579  |   0.0 |  3.27
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 0.0010572  | 0.0010572  | 0.0010572  |   0.0 |  2.75
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0          | 0          | 0          |   0.0 |  0.00
+Other   |            | 0.0002007  |            |       |  0.52
+
+Nlocal:             60 ave          60 max          60 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:           3942 ave        3942 max        3942 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:          22768 ave       22768 max       22768 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 22768
+Ave neighs/atom = 379.46667
+Ave special neighs/atom = 8.2666667
+Neighbor list builds = 0
+Dangerous builds = 0
+Replicating atoms ...
+  triclinic box = (0 0 0) to (18.7625 24.559364 24.740607) with tilt (2.0623074 1.9678073 8.153072)
+  1 by 1 by 1 MPI processor grid
+  1200 atoms
+  1200 bonds
+  1760 angles
+  2240 dihedrals
+  560 impropers
+Finding 1-2 1-3 1-4 neighbors ...
+  special bond factors lj:    0        0        0.5     
+  special bond factors coul:  0        0        0.8333333333333334
+     3 = max # of 1-2 neighbors
+     6 = max # of 1-3 neighbors
+    11 = max # of 1-4 neighbors
+    13 = max # of special neighbors
+  special bonds CPU = 0.000 seconds
+  replicate CPU = 0.002 seconds
+System init for write_data ...
+  generated 45 of 45 mixed pair_coeff terms from arithmetic mixing rule
+160 atoms in group ca2ca1
+160 atoms in group cn
+  generated 45 of 45 mixed pair_coeff terms from arithmetic mixing rule
+Neighbor list info ...
+  update every 1 steps, delay 10 steps, check yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 4 6 5
+  3 neighbor lists, perpetual/occasional/extra = 3 0 0
+  (1) compute G2G3gen/vecchunk, perpetual
+      attributes: full, newton on
+      pair build: full/bin
+      stencil: full/bin/3d
+      bin: standard
+  (2) pair lj/charmm/coul/charmm, perpetual, half/full from (1)
+      attributes: half, newton on
+      pair build: halffull/newton
+      stencil: none
+      bin: none
+  (3) compute G2G3gen/vecchunk, perpetual, copy from (1)
+      attributes: full, newton on
+      pair build: copy
+      stencil: none
+      bin: none
+Setting up Verlet run ...
+  Unit style    : real
+  Current step  : 6
+  Time step     : 1
+Per MPI rank memory allocation (min/avg/max) = 22.27 | 22.27 | 22.27 Mbytes
+   Step          Time           Temp          Press          Volume         TotEng         E_pair         E_mol     
+         6       6.000      300.000000    17763.996247    11400.349463 -6.500928e+03 -8.073382e+03 5.002564e+02
+        16      16.000      180.443303    11131.041072    11400.349463 -6.387492e+03 -7.964424e+03 9.320295e+02
+Loop time of 0.0806117 on 1 procs for 10 steps with 1200 atoms
+
+Performance: 10.718 ns/day, 2.239 hours/ns, 124.051 timesteps/s
+91.7% CPU use with 1 MPI tasks x no OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.066861   | 0.066861   | 0.066861   |   0.0 | 82.94
+Bond    | 0.0028384  | 0.0028384  | 0.0028384  |   0.0 |  3.52
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 0.00040308 | 0.00040308 | 0.00040308 |   0.0 |  0.50
+Output  | 0.0033018  | 0.0033018  | 0.0033018  |   0.0 |  4.10
+Modify  | 0.0071469  | 0.0071469  | 0.0071469  |   0.0 |  8.87
+Other   |            | 6.019e-05  |            |       |  0.07
+
+Nlocal:           1200 ave        1200 max        1200 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:           9584 ave        9584 max        9584 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:         455220 ave      455220 max      455220 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+FullNghs:       910440 ave      910440 max      910440 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 910440
+Ave neighs/atom = 758.7
+Ave special neighs/atom = 8.2666667
+Neighbor list builds = 0
+Dangerous builds = 0
+System init for write_data ...
+  generated 45 of 45 mixed pair_coeff terms from arithmetic mixing rule
+Neighbor list info ...
+  update every 1 steps, delay 10 steps, check yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 4 6 5
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair lj/charmm/coul/charmm, perpetual, half/full from (2)
+      attributes: half, newton on
+      pair build: halffull/newton
+      stencil: none
+      bin: none
+  (2) compute G2G3gen/vecchunk, perpetual
+      attributes: full, newton on
+      pair build: full/bin
+      stencil: full/bin/3d
+      bin: standard
+Total wall time: 0:00:00
