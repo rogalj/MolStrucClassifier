@@ -1,5 +1,7 @@
 # classifierCVs
 
+**[Documentation](https://molstrucclassifier.readthedocs.io/en/latest/) | **[arXiv](https://arxiv.org/abs/2404.00155)
+
 <p align="justify"> 
   ClassifierCVs is a local structure classification tool based on NN 
 </p>
