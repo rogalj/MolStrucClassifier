@@ -8,6 +8,9 @@
 
 The following paper describe details of the local structure classification. 
 
+ <link rel="shortcut icon" type="image/png" href="logo.png">
+
+
 ## Table of Contents
 - [Introduction](#Introduction)
 - [Requirement](#Requirement)
