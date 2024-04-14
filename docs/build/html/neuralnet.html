@@ -1,0 +1,526 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Neural Network Classification Code &mdash; MolStrucClassifier  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_extra.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Parameters" href="Parameters.html" />
+    <link rel="prev" title="How to use Ogre" href="Ogre.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> MolStrucClassifier
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="Install.html">How To Install</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="SymmetryFunction.html">Symmetry Function codes (molvec_lib)</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="FULL2.html">LAMMPS atom style (USER-ATOM-VEC-FULL2)</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="How_to_use.html">How to link with LAMMPS and run</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Ovito.html">Get data file using ovito</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="moltemplate.html">How to prepare files using moltemplate</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Ogre.html">How to use Ogre</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Neural Network Classification Code</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-code">The code</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#hard-coded-variables">Hard-coded variables</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#input-and-output-files">Input and output files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#main-input-file">Main input file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#training-and-test-data">Training and test data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#weights-file">Weights file</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#running-the-code">Running the code</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#output-files">Output files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#test-examples">Test examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#compilation">Compilation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#linux-machines">Linux machines</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#using-intel-mkl">Using Intel MKL</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#using-openblas">Using OpenBLAS</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#mac">Mac</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id4">Using OpenBLAS</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#new-york-university-clusters">New York University clusters</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#greene-computing-cluster">Greene computing cluster</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rusalka-computing-cluster">Rusalka computing cluster</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Parameters.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Sample.html">Sample_code</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MolStrucClassifier</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Neural Network Classification Code</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/neuralnet.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="neural-network-classification-code">
+<span id="neuralnet"></span><h1>Neural Network Classification Code<a class="headerlink" href="#neural-network-classification-code" title="Permalink to this headline">¶</a></h1>
+<p>The neural network classification code uses a feed-forward neural network to assign an output vector with a given value for each class it has been trained for.  The code can be used to do both training and testing.</p>
+<p>The code can be found in the folder</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">MolStrucClassifier/nn-fit</span>
+</pre></div>
+</div>
+<div class="section" id="the-code">
+<h2>The code<a class="headerlink" href="#the-code" title="Permalink to this headline">¶</a></h2>
+<p>The source code is <code class="docutils literal notranslate"><span class="pre">nn-class.cpp</span></code> together with the header file <code class="docutils literal notranslate"><span class="pre">nn-class.h</span></code> and can be compiled using the <code class="docutils literal notranslate"><span class="pre">Makefile</span></code>, for details see <a class="reference internal" href="#compilation">Compilation</a>.  The code runs in parallel using mpi and depending on the platform and compiler the corresponding libraries need to be available accordingly.  The number of mpi threads is set in the input file, see description of the <a class="reference internal" href="#main-input-file">input file</a>.</p>
+<p>Within the folder, there is also an example for the input files <code class="docutils literal notranslate"><span class="pre">input.dat</span></code> and a training data set <code class="docutils literal notranslate"><span class="pre">train.dat</span></code>, as well as an example file for a submission script to the <a class="reference external" href="https://slurm.schedmd.com/overview.html">slurm queueing system</a> <code class="docutils literal notranslate"><span class="pre">job_NN.slurm</span></code>.</p>
+<div class="section" id="hard-coded-variables">
+<h3>Hard-coded variables<a class="headerlink" href="#hard-coded-variables" title="Permalink to this headline">¶</a></h3>
+<p>The hard-coded variables can be found in the header file <code class="docutils literal notranslate"><span class="pre">nn-class.h</span></code>.  The hard-coded variables include:</p>
+<dl class="field-list simple">
+<dt class="field-odd">MAX_NODES</dt>
+<dd class="field-odd"><p>largest value of a hidden layer dimension + 1 (default is 51)</p>
+</dd>
+</dl>
+<p>Furthermore, the following variable should be adjusted as needed:</p>
+<dl class="field-list simple">
+<dt class="field-odd">goodrange[2]{1,1}</dt>
+<dd class="field-odd"><p>scaling range for input and output values; this is an absolute value; the absolute value of the range has to be the same for input and output</p>
+</dd>
+</dl>
+<p>There is currently one activation functions implemented, 1/(1+exp(x)); again this is hard-coded and other activation functions can be added as needed.</p>
+</div>
+</div>
+<div class="section" id="input-and-output-files">
+<h2>Input and output files<a class="headerlink" href="#input-and-output-files" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="main-input-file">
+<h3>Main input file<a class="headerlink" href="#main-input-file" title="Permalink to this headline">¶</a></h3>
+<p>The main input file contains the basic set-up; an example file <code class="docutils literal notranslate"><span class="pre">input.dat</span></code> is provided together with the code and shown in the following:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">------------------------------------------------------------------------------------</span>
+<span class="go"> Input File for neural network fit</span>
+<span class="go">------------------------------------------------------------------------------------</span>
+<span class="gp">#</span> initial seed <span class="k">for</span> random number generator <span class="o">(</span>&gt;0<span class="o">)</span>
+<span class="gp">#</span> <span class="k">if</span> seed &lt;<span class="o">=</span> <span class="m">0</span> a random seed between <span class="m">1</span> and <span class="m">1000</span> is generated
+<span class="go">ran_seed          123</span>
+
+<span class="gp">#</span> network architecture
+<span class="go">hidden layers     2             ! number of hidden layers</span>
+<span class="go">input             14            ! number of input features</span>
+<span class="go">hidden nodes      25 25         ! number of nodes in each hidden layer (one number for each layer)</span>
+<span class="go">output            5             ! number of outputs</span>
+
+<span class="gp">#</span> parallel threads
+<span class="go">nthreads          8</span>
+
+<span class="gp">#</span> simulation setup
+<span class="go">run option        0             ! 1=train with new weights, -1=train with old weight; 0=test job</span>
+<span class="go">iterations        250           ! maximum number of training iterations</span>
+<span class="go">optimizer max     200           ! maximum number of optimizer steps</span>
+<span class="go">save frequency    1             ! how often the results are saved</span>
+
+<span class="go">train input       train.dat     ! name of file containing training data</span>
+<span class="go">test input        test_A15.dat      ! name of file containing test data</span>
+<span class="go">test output       output.dat    ! name of file for test output</span>
+<span class="go">test error        error.dat     ! name of file for test error result (misclassified)</span>
+
+
+<span class="go">weights input     weights_old.dat   ! name of file containing previous weights</span>
+<span class="go">weights output    weights.dat   ! name of file to print new fitted weights</span>
+<span class="go">cost output       cost.dat      ! name of the file to save values of cost function file fitting</span>
+
+<span class="go">!-----------------------------------------------------------------------------------</span>
+<span class="go">! FORMAT OF THE INPUT FILE:</span>
+<span class="go">! the first 3 lines are simply read in as string</span>
+<span class="go">! the rest is parsed and identified over a string</span>
+<span class="go">! !IMPORTANT!  The first 16 (!) characters are reserved for the key word!!</span>
+<span class="go">! after this different parameter in one line must be separated by at least on space</span>
+<span class="go">! lines starting with &#39;!&#39; or &#39;#&#39; are comments</span>
+</pre></div>
+</div>
+<p>The first 3 lines are simply read in as string and ignored.
+The first 16(!) characters of each line are reserved for the keyword and should not be changed; the values given for each keyword are free format; if several values are required, they need to be separated by spaces.  The order of the input lines can be changed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">cost output</dt>
+<dd class="field-odd"><p>name of the output file containing the values of the cost function during the fit; (default: cost.dat)</p>
+</dd>
+<dt class="field-even">hidden layers</dt>
+<dd class="field-even"><p>Number of hidden layers in the NN; this needs to be specified before the other parameters of the network architecture; (default: -1)</p>
+</dd>
+<dt class="field-odd">hidden nodes</dt>
+<dd class="field-odd"><p>number of nodes in each hidden layer; provide one number of each layer separated by spaces;</p>
+</dd>
+<dt class="field-even">input</dt>
+<dd class="field-even"><p>number of input features; (default: -1)</p>
+</dd>
+<dt class="field-odd">iterations</dt>
+<dd class="field-odd"><p>number of optimisation steps; each step goes over all training points; (default: 1)</p>
+</dd>
+<dt class="field-even">nthreads</dt>
+<dd class="field-even"><p>number of OMP parallel threads; (default: 1)</p>
+</dd>
+<dt class="field-odd">optimizer max</dt>
+<dd class="field-odd"><p>maximum number of optimizer/gradient steps in each iteration; (default: 1)</p>
+</dd>
+<dt class="field-even">output</dt>
+<dd class="field-even"><p>number of output nodes; (default: -1)</p>
+</dd>
+<dt class="field-odd">ran_seed</dt>
+<dd class="field-odd"><p>Seed to initialize the random number generator; random numbers are used to initialize the weights of the NN in fitting; if a value smaller than 0 is chosen, a random seed between 1 and 1000 is set by the programme; (default: 42)</p>
+</dd>
+<dt class="field-even">run option</dt>
+<dd class="field-even"><p>determines simulation task: 0 - read in weights file and evaluate test data; 1 - train NN with randomly initialized weights; -1 - train NN with weights read in from weights file; (default: 0)</p>
+</dd>
+<dt class="field-odd">save frequency</dt>
+<dd class="field-odd"><p>how often the fitted weights are saved to an output file; (default: 1)</p>
+</dd>
+<dt class="field-even">test error</dt>
+<dd class="field-even"><p>name of the file containing the misclassified test data; (default: error.dat)</p>
+</dd>
+<dt class="field-odd">test input</dt>
+<dd class="field-odd"><p>name of the input file containing the test data;</p>
+</dd>
+<dt class="field-even">test output</dt>
+<dd class="field-even"><p>name of the file containing the classification results of test data; (default: output.dat)</p>
+</dd>
+<dt class="field-odd">train input</dt>
+<dd class="field-odd"><p>name of the input file containing the training data;</p>
+</dd>
+<dt class="field-even">weights input</dt>
+<dd class="field-even"><p>name of input file containing the weights; (default: weights_old.dat)</p>
+</dd>
+<dt class="field-odd">weights output</dt>
+<dd class="field-odd"><p>name of the output file containing the fitted weights; (default: weights.dat)</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="training-and-test-data">
+<h3>Training and test data<a class="headerlink" href="#training-and-test-data" title="Permalink to this headline">¶</a></h3>
+<p>The format of the file containing the training or test data is given by the number of input and output nodes.  In general, there is a line for each data point which contains the values of the input functions and corresponding output values.  For classification, the output values are either 0 or 1. The number of columns is thus equal to the number of input + number of output nodes: e.g., if there are <em>x</em> input functions and <em>y</em> output values, then the first <em>x</em> columns will be the values of these input functions for a given configuration, and the next <em>y</em> columns the values of the corresponding output vector.</p>
+<p>In the example provided, the training and test data have 14 input functions and 5 output values as detailed in this <a class="reference external" href="https://doi.org/10.1103/PhysRevLett.123.245701">publication</a>.</p>
+</div>
+<div class="section" id="weights-file">
+<h3>Weights file<a class="headerlink" href="#weights-file" title="Permalink to this headline">¶</a></h3>
+<p>The weights file contains the optimized weights and information concerning the architecture of the NN:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>line 1: number of hidden layers</p></li>
+<li><p>line 2: NN architecture; number of nodes in input, hidden, and output layers</p></li>
+<li><p>line 3: translation and scaling for the input and output values</p></li>
+<li><p>line 4: number of fitting iterations</p></li>
+<li><p>line 5 and beyond: weights</p></li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="running-the-code">
+<h2>Running the code<a class="headerlink" href="#running-the-code" title="Permalink to this headline">¶</a></h2>
+<p>After the code has been compiled, it is executed by calling</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">./ml-classification.exe input.dat &gt; screen.out</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">input.dat</span></code> is the name of the main input file. The code will run in parallel with the number of threads defined in the <a class="reference internal" href="#main-input-file">input file</a>.
+In the command line above, the screen output is redirected to <code class="docutils literal notranslate"><span class="pre">screen.out</span></code>.</p>
+<p>If the training is successful and the weights are converged, the file <code class="docutils literal notranslate"><span class="pre">weights.dat</span></code> (or whichever name was set for this file in the input) can be used to apply the NN for the classification of unknown environments.</p>
+<div class="section" id="output-files">
+<h3>Output files<a class="headerlink" href="#output-files" title="Permalink to this headline">¶</a></h3>
+<p>In <strong>training mode</strong> (1 or -1), the code writes a weights file (default <code class="docutils literal notranslate"><span class="pre">weights.dat</span></code>, see <a class="reference internal" href="#weights-file">Weights file</a>), a cost function file (default <code class="docutils literal notranslate"><span class="pre">cost.dat</span></code>), and prints some additional information to the screen. The cost function file contains the training loss and can be used to monitor the convergence of the fit.</p>
+<p>In <strong>testing mode</strong> (0), the code writes an output and error file containing the predicted and true values of the test data.
+The output of the NN is a continuous value <span class="math notranslate nohighlight">\(x \in [0,1]\)</span> for each component (class) of the output layer.  For the test data, the true value is strictly either 0 or 1.  To compare the predicted values with the true values in the test file, the code checks if all components that should be 0 are <span class="math notranslate nohighlight">\(&lt; 0.5\)</span> AND if the component that should be 1 is <span class="math notranslate nohighlight">\(&gt; 0.5\)</span>.  If this is not the case, this data point is considered as wrongly predicted by the NN.</p>
+<p>The L1 accuracy is defined here as 1-(wrong_points/total_points).</p>
+<dl class="field-list simple">
+<dt class="field-odd">screen.out</dt>
+<dd class="field-odd"><p>standard output contains information about the architecture of the NN and running parameters; the L1 accuracy of the predicted classification with respect to the test set</p>
+</dd>
+<dt class="field-even">output.dat</dt>
+<dd class="field-even"><p>for all test data points, the first <em>x</em> columns are the values of the <em>x</em> input functions, the next <em>y</em> columns are the predicted output values of the NN with <em>y</em> output nodes, and the last <em>y</em> columns are the actual values from the training set</p>
+</dd>
+<dt class="field-odd">error.dat</dt>
+<dd class="field-odd"><p>same format as <em>output.txt</em>, but here only the points are recorded for which the NN failed to predict the correct class as defined above</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="test-examples">
+<h2>Test examples<a class="headerlink" href="#test-examples" title="Permalink to this headline">¶</a></h2>
+<p>To test the quality of a fitted NN for classification, the predicted values can be compared to known values for a given set of data points (e.g. different local structural environments).</p>
+<p>In the folder <code class="docutils literal notranslate"><span class="pre">testdata</span></code>, there are several input files for test data in various structural environments: <code class="docutils literal notranslate"><span class="pre">test_BCC.txt</span></code>, <code class="docutils literal notranslate"><span class="pre">test_FCC.txt</span></code>, <code class="docutils literal notranslate"><span class="pre">test_HCP.txt</span></code>, <code class="docutils literal notranslate"><span class="pre">test_A15.txt</span></code>, <code class="docutils literal notranslate"><span class="pre">test_LIQ.txt</span></code>, and <code class="docutils literal notranslate"><span class="pre">test_INT.txt</span></code> within a body-centred cubic (BCC), face-centred cubic (FCC), hexagonal close-packed (HCP), A15, liquid (LIQ), and BCC/A15 interface (INT) structure (see also this <a class="reference external" href="https://doi.org/10.1103/PhysRevLett.123.245701">publication</a>).</p>
+<p>To run a test on any of these test data sets, provide a weight file, set the run option to 0, and set the name of the test input to any of the provided files.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Make sure that the architecture (input, output, hidden layers) used with the given weights file is the same as used for training the neural network!</p>
+</div>
+</div>
+<div class="section" id="compilation">
+<h2>Compilation<a class="headerlink" href="#compilation" title="Permalink to this headline">¶</a></h2>
+<p>The NN fitting and testing code can be used either with <a class="reference external" href="https://software.intel.com/en-us/mkl">Intel MKL</a> or <a class="reference external" href="https://www.openblas.net">OpenBLAS</a> which needs to be installed on the system the code is supposed to run on.</p>
+<p>(New York University cluster specific setup is explained <a class="reference internal" href="#new-york-university-clusters">here</a>)</p>
+<div class="section" id="linux-machines">
+<h3>Linux machines<a class="headerlink" href="#linux-machines" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="using-intel-mkl">
+<h4>Using Intel MKL<a class="headerlink" href="#using-intel-mkl" title="Permalink to this headline">¶</a></h4>
+<p>Make sure <a class="reference external" href="https://software.intel.com/en-us/mkl">Intel MKL</a> is installed and environment variables (such as <code class="docutils literal notranslate"><span class="pre">MKLROOT</span></code>) are set correctly.</p>
+<p>Then the provided <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> can be used and the code is compiled by</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">make</span>
+</pre></div>
+</div>
+<p>which will produce an executable <code class="docutils literal notranslate"><span class="pre">ml-classification.exe</span></code>.  This executable will run in parallel with the number of threads given in the input file.</p>
+</div>
+<div class="section" id="using-openblas">
+<h4>Using OpenBLAS<a class="headerlink" href="#using-openblas" title="Permalink to this headline">¶</a></h4>
+<p>Make sure <a class="reference external" href="https://www.openblas.net">OpenBLAS</a> is installed and environment variables (such as <code class="docutils literal notranslate"><span class="pre">BLAS_LIB</span></code>) are set correctly.</p>
+<p>Then the provided <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> can be used and the code is compiled by</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">make OBLAS=1</span>
+</pre></div>
+</div>
+<p>which will produce an executable <code class="docutils literal notranslate"><span class="pre">ml-classification.exe</span></code>.  This executable will run in parallel with the number of threads given in the input file.</p>
+</div>
+</div>
+<div class="section" id="mac">
+<h3>Mac<a class="headerlink" href="#mac" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id4">
+<h4>Using OpenBLAS<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<p>If <a class="reference external" href="https://www.openblas.net">OpenBLAS</a> is not installed, this can, for example, be done using <a class="reference external" href="https://www.macports.org">MacPorts</a>.  Usually, the corresponding <code class="docutils literal notranslate"><span class="pre">INCLUDE</span></code> and <code class="docutils literal notranslate"><span class="pre">LDLIBS</span></code> path should then be</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">/opt/local/include</span>
+<span class="go">/opt/local/lib</span>
+</pre></div>
+</div>
+<p>If this is not the case, the <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> needs to be adapted correspondingly.</p>
+<p>The code can then be compiled using</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">make MAC_OBLAS=1</span>
+</pre></div>
+</div>
+<p>which will produce an executable <code class="docutils literal notranslate"><span class="pre">Machine_Learning.exe</span></code>.  This executable will run in parallel with the number of threads given in the input file.</p>
+</div>
+</div>
+<div class="section" id="new-york-university-clusters">
+<h3>New York University clusters<a class="headerlink" href="#new-york-university-clusters" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="greene-computing-cluster">
+<h4>Greene computing cluster<a class="headerlink" href="#greene-computing-cluster" title="Permalink to this headline">¶</a></h4>
+<p>On Greene, all the necessary Intel MKL libraries and compilers should be installed.  They are accessible by loading the corresponding modules, e.g.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">module load openmpi/intel/4.1.1</span>
+</pre></div>
+</div>
+<p>Then the provided <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> can be use and the code is compiled by</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">make</span>
+</pre></div>
+</div>
+<p>which will produce an executable <code class="docutils literal notranslate"><span class="pre">ml-classification.exe</span></code>.  This executable will run in parallel with the number of threads given in the input file.</p>
+</div>
+<div class="section" id="rusalka-computing-cluster">
+<h4>Rusalka computing cluster<a class="headerlink" href="#rusalka-computing-cluster" title="Permalink to this headline">¶</a></h4>
+<p>On Rusalka, all the necessary Intel MKL libraries and compilers should be installed.  They are accessible by loading the corresponding modules, e.g.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">module load intel/17.0.0.098</span>
+<span class="go">module load openmpi/3.1.3</span>
+</pre></div>
+</div>
+<p>Then the provided <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> can be use and the code is compiled by</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">make</span>
+</pre></div>
+</div>
+<p>which will produce an executable <code class="docutils literal notranslate"><span class="pre">ml-classification.exe</span></code>.  This executable will run in parallel with the number of threads given in the input file.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="Parameters.html" class="btn btn-neutral float-right" title="Parameters" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Ogre.html" class="btn btn-neutral float-left" title="How to use Ogre" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020-2024, Daisuke Kuroshima, Jutta Rogal.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

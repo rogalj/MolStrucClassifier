@@ -1,0 +1,375 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>How to link with LAMMPS and run &mdash; MolStrucClassifier  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_extra.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Parameters" href="Parameters.html" />
+    <link rel="prev" title="LAMMPS atom style (USER-ATOM-VEC-FULL2)" href="FULL2.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> MolStrucClassifier
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="Install.html">Install</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="SymmetryFunction.html">Symmetry Function codes (molvec_lib)</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="FULL2.html">LAMMPS atom style (USER-ATOM-VEC-FULL2)</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">How to link with LAMMPS and run</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#libraly-code-with-lammps">Libraly code with LAMMPS</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#lammps-source-code">Lammps source code</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#running-lammps-code">Running LAMMPS code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#symmetry-function-calculation-with-lammps-user-g2g3">Symmetry function calculation with LAMMPS (USER-G2G3)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#neural-network-calculation-with-lammps-use-user-nnout-and-user-nnoutg2g3">Neural Network calculation with LAMMPS (Use USER-NNout and USER-NNoutg2g3)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Parameters.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Sample.html">Sample_code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Ovito.html">Get data file using ovito</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="moltemplate.html">How to prepare files using moltemplate</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Ogre.html">How to use Ogre</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="neuralnet.html">Neural Network Classification Code</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MolStrucClassifier</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>How to link with LAMMPS and run</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/How_to_use.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="how-to-link-with-lammps-and-run">
+<h1>How to link with LAMMPS and run<a class="headerlink" href="#how-to-link-with-lammps-and-run" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="libraly-code-with-lammps">
+<h2>Libraly code with LAMMPS<a class="headerlink" href="#libraly-code-with-lammps" title="Permalink to this headline">¶</a></h2>
+<p>We have created several files to calculate the symmetry functions. If your system is larger than the current setting, you should modify line 12 and 14 in dafed.h.</p>
+<p>After modifying any of the files, compile the code by typing:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">make</span>
+</pre></div>
+</div>
+<p>To run the command, make sure to load the Intel and OpenMPI modules. If you encounter any error messages, there may be a problem in your code that needs to be fixed.</p>
+<p>If you connect the libraly code with the LAMMPS source code, you need to copy dafed.h to dafed_link.h and delete the first line of dafed_link.h.</p>
+<p>After fixing all the bugs, proceed as follows:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">make lib</span>
+</pre></div>
+</div>
+<p>to compile the new changes to the LAMMPS source code. If you’ve added a new file, make sure to add it to the Makefile.</p>
+<div class="section" id="lammps-source-code">
+<h3>Lammps source code<a class="headerlink" href="#lammps-source-code" title="Permalink to this headline">¶</a></h3>
+<p>To compile the newest version of the LAMMPS code, go to the src directory and type:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">make mpi</span>
+</pre></div>
+</div>
+<p>If you have a new file to add in the source directory, t is I highly recommended you to create a subdirectory within the source directory and copy the file there.
+If you encounter any error messages after typing <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">mpi</span></code>, carefully review and fix all the problems you encounter.</p>
+</div>
+</div>
+<div class="section" id="running-lammps-code">
+<h2>Running LAMMPS code<a class="headerlink" href="#running-lammps-code" title="Permalink to this headline">¶</a></h2>
+<p>To run the LAMMPS code, you need to have a run file and the input files required in the run file. For instance, you need to have weight.txt, an input file, urea.settings, and urea.init file for running example.</p>
+</div>
+<div class="section" id="symmetry-function-calculation-with-lammps-user-g2g3">
+<h2>Symmetry function calculation with LAMMPS (USER-G2G3)<a class="headerlink" href="#symmetry-function-calculation-with-lammps-user-g2g3" title="Permalink to this headline">¶</a></h2>
+<p>This code can calculate the symmetry function using LAMMPS. Currently, this code accepts up to 2 point vector representations at maximum. If you would like to use this feature, make sure to copy the .cpp file and .h file to the src directory in LAMMPS and compile it.
+The following line is the syntax for the LAMMPS command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">compute  ID  group-ID  G2G3gen/vecchunk center-atom-id  1st-vector-ID  2nd-vector-ID cutoff number_of_symmetry_function</span>
+</pre></div>
+</div>
+<p>In addition to the run file and input files, you also need INPUT.dat file.</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 74%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>name</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>G2 point / G3 point</p></td>
+<td><p>Write number of G2 or G3 point symmetry function.</p></td>
+</tr>
+<tr class="row-odd"><td><p>G2p Rs / G2p eta</p></td>
+<td><p>Write Rs or eta for the G2 point symmetry function.</p></td>
+</tr>
+<tr class="row-even"><td><p>G3p kappa</p></td>
+<td><p>Write kappa for the G3 point symmetry function.</p></td>
+</tr>
+<tr class="row-odd"><td><p>G2 point vec1 / vec2</p></td>
+<td><p>Write number of G2 point vector symmetry function.</p></td>
+</tr>
+<tr class="row-even"><td><p>G2v1 Rs / G2v2 Rs</p></td>
+<td><p>Write Rs for the G2 point vector symmetry function.</p></td>
+</tr>
+<tr class="row-odd"><td><p>G2v1 eta / G2v2 eta</p></td>
+<td><p>Write eta for the G2 point vector symmetry function.</p></td>
+</tr>
+<tr class="row-even"><td><p>G3 point vec1 / vec2</p></td>
+<td><p>Write number of G2 point vector symmetry function.</p></td>
+</tr>
+<tr class="row-odd"><td><p>G3v1 kappa / G3v2 kappa</p></td>
+<td><p>Write kappa for the G3 point vector symmetry function.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="neural-network-calculation-with-lammps-use-user-nnout-and-user-nnoutg2g3">
+<h2>Neural Network calculation with LAMMPS (Use USER-NNout and USER-NNoutg2g3)<a class="headerlink" href="#neural-network-calculation-with-lammps-use-user-nnout-and-user-nnoutg2g3" title="Permalink to this headline">¶</a></h2>
+<p>This code can calculate the classification result using NN with symmetry function parameter. If you would like to use this, make sure you copy the .cpp file and .h file to src directory in LAMMPS and compile it.</p>
+<p>This file requires an INPUT.dat file, which has a similar style to the Symmetry function codes, but with slight modifications. Additionally, you need to have weight.txt, which you can prepare in the <a class="reference external" href="file:///home/drk354/Downloads/MolStrucClassifier-main/docs/build/html/neuralnet.html">Neural Network Classification section</a>. The “Noutg2g3” code can store misclassified molecules in addition to the symmetry function result.</p>
+<p>Basic parameters Required in INPUT.dat:</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 74%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>num_sf</p></td>
+<td><p>Number of total symmetry functions</p></td>
+</tr>
+<tr class="row-odd"><td><p>num_pvsf_type</p></td>
+<td><p>Number of point-vector symmetry functions</p></td>
+</tr>
+<tr class="row-even"><td><p>COvectype</p></td>
+<td><p>Element IDs for the first vector</p></td>
+</tr>
+<tr class="row-odd"><td><p>NNvectype</p></td>
+<td><p>Element IDs for the second vector</p></td>
+</tr>
+<tr class="row-even"><td><p>triclinic</p></td>
+<td><p>True if this is in a non-orthogonal box</p></td>
+</tr>
+<tr class="row-odd"><td><p>center atom</p></td>
+<td><p>Element ID of the center atom. Must be unique in the molecule</p></td>
+</tr>
+<tr class="row-even"><td><p>atm in molec</p></td>
+<td><p>Number of atoms in the molecule. If you have ia defect, choose the one with more atoms</p></td>
+</tr>
+<tr class="row-odd"><td><p>cutoffmin</p></td>
+<td><p>Minimum cutoff in angstrom</p></td>
+</tr>
+<tr class="row-even"><td><p>cutoffmax</p></td>
+<td><p>Maximum cutoff in angstrom</p></td>
+</tr>
+</tbody>
+</table>
+<p>Parameter information about the symmetry function is the same as the <a class="reference external" href="file:///home/drk354/Downloads/MolStrucClassifier-main/docs/build/html/How_to_use.html#parameters">Parameters section of ver1.0</a>
+In the run file, you need to specify the element ID of the center atom and the number of  symmetry function. “NNoutg2g3” requires an additional argument called “prob_error”. If “prob_error” is 0.4, it means that if less than 40% of the local environment is classified the same as the targeted molecule.</p>
+<p>Syntax for NNout is:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">compute CNN all nnoutg2g3/atom center_id #of_symmetry_function</span>
+</pre></div>
+</div>
+<p>Syntax for NNoutg2g3 is:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">compute CNN  all nnoutg2g3gen/atom center_id #of_symmetry_function prob_error</span>
+</pre></div>
+</div>
+<p>The output of “NNout” is stored in “g2g3output.dat”, which contains both the symmetry function and classification results.
+If you use “NNoutg2g3” instead, additional files will be generated. “g2g3good.dat” stores the symmetry function and classification results for correctly classified molecules, while “g2g3error.dat” contains similar information for molecules that are misclassified.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="Parameters.html" class="btn btn-neutral float-right" title="Parameters" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="FULL2.html" class="btn btn-neutral float-left" title="LAMMPS atom style (USER-ATOM-VEC-FULL2)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020-2024, Daisuke Kuroshima, Jutta Rogal.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

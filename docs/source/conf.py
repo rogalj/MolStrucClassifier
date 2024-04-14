@@ -12,7 +12,7 @@
 #
 import os
 import sys
-# import sphinx_rtd_theme
+import sphinx_rtd_theme
 from datetime import date
 
 
@@ -38,7 +38,7 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinx.ext.githubpages',
     'sphinx.ext.napoleon',
-#    'sphinx_rtd_theme',
+    'sphinx_rtd_theme',
 ]
 
 html_theme = 'sphinx_rtd_theme'

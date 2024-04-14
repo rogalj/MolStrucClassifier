@@ -1,0 +1,311 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>How to prepare files using moltemplate &mdash; MolStrucClassifier  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_extra.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> MolStrucClassifier
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="Install.html">Install</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="SymmetryFunction.html">Symmetry Function codes (molvec_lib)</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="FULL2.html">LAMMPS atom style (USER-ATOM-VEC-FULL2)</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="How_to_use.html">How to link with LAMMPS and run</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Parameters.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Sample.html">Sample_code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Ovito.html">Get data file using ovito</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="neuralnet.html">Neural Network Classification Code</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MolStrucClassifier</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>How to prepare files using moltemplate</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/moltemplate.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="how-to-prepare-files-using-moltemplate">
+<span id="moltemplate"></span><h1>How to prepare files using moltemplate<a class="headerlink" href="#how-to-prepare-files-using-moltemplate" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="how-to-use-moltemplate">
+<h2>How to Use moltemplate<a class="headerlink" href="#how-to-use-moltemplate" title="Permalink to this headline">¶</a></h2>
+<p>Below are the basic steps for working with Moltemplate. I’ll explain one of the examples below:</p>
+<p>If you haven’t worked with Moltemplate recently, get system.lt and urea.lt to the test directory.</p>
+<p>Run the following command for lammps run:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">moltemplate.sh system.lt</span>
+</pre></div>
+</div>
+<p>You can get rid of unnecessary lines in the file by typing the following command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cleanup_moltemplate.sh</span>
+</pre></div>
+</div>
+<p>You will get these files after running the previous commands:</p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 42%" />
+<col style="width: 58%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>system.in</p></td>
+<td><p>lammps input file</p></td>
+</tr>
+<tr class="row-even"><td><p>system.data</p></td>
+<td><p>lammps data file</p></td>
+</tr>
+<tr class="row-odd"><td><p>system.in.init</p></td>
+<td><p>force field functions</p></td>
+</tr>
+</tbody>
+</table>
+<p>If you finish the urea sample, you can continue with the actual data.</p>
+<div class="section" id="step-1">
+<h3>Step 1<a class="headerlink" href="#step-1" title="Permalink to this headline">¶</a></h3>
+<p>Get the file from ovito with mass, charges, and bond information (in the format of a .data file). If you have other information, you can delete it now. Then type:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">ltemplyfy.sh ovitofilename &gt; outputfilename     (ltemplyfy.sh urea.data &gt; urea.lt)</span>
+</pre></div>
+</div>
+<p>For example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">ltemplyfy.sh urea.data &gt; urea.lt</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="step-2">
+<h3>Step 2<a class="headerlink" href="#step-2" title="Permalink to this headline">¶</a></h3>
+<p>Check the urea.lt file or the output file you made. You may have to modify several things. If you don’t see a part that I will mention, skip that part.</p>
+<ol class="arabic simple">
+<li><p>Add import “gaff.lt” before write_once(“In Init”) {.</p></li>
+<li><p>Add Urea inherits GAFF { on the next line after the import “gaff.lt”.</p></li>
+<li><p>Add another closed curly bracket } at the end of the file.</p></li>
+<li><p>If you have a unique name for the atom type that is not used in GAFF, make sure you change the name in the Data Atoms section. For example, if you have n1 and n2, you can keep the name in Data Masses, but you have to have the right name such as n in Data atom section. Check useful commands shown below.</p></li>
+<li><p>Remove bond type (such as &#64;bond:type1).</p></li>
+<li><p>Change “Data Bonds” to “Data Bond List”.</p></li>
+<li><p>Check the atom information. If it says type##, you have to change the name of the type to the corresponding one. If you change this, you also have to change &#64;atom: to the new name. Also you need to change atom in Data Bond List.</p></li>
+<li><p>In Data Atoms section, if you don’t have $mol section or the value for this is the same for the whole system, you have to check the input data. Most likely you need to go to Ovito and assign molecule data. Basically, you need to do clustering and go to compute property &gt; molecule identifier &gt; cluster. More details are in How to use Ovito.</p></li>
+<li><p>If you see angle data or some others after Bond information, remove that information now.</p></li>
+<li><p>module load anaconda3/2020.07</p></li>
+<li><p>Change system.lt’s first line to whatever the input file, change the cell box size.</p></li>
+<li><p>Run:</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">moltemplate</span><span class="o">.</span><span class="n">sh</span> <span class="n">system</span><span class="o">.</span><span class="n">lt</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="13">
+<li><p>Check system.data to make sure it ran.</p></li>
+<li><p>Clean up the code by typing:</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cleanup_moltemplate</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="15">
+<li><p>If you want to change the atom type, do it now. Make sure you change it to the right name.</p></li>
+<li><p>Change the n2 in the Atom List to the corresponding name.</p></li>
+<li><p>Use this file as a standard.</p></li>
+<li><p>When you use it in LAMMPS, you need to have system.data, system.in.init, and system.in.settings in the running directory.</p></li>
+<li><p>You need to modify urea.in.settings if you change the atom information. For instance, if you added n2, you should have a line for that too.</p></li>
+<li><p>Also, change the atom type from 4 to 5 for urea in system.data.</p></li>
+</ol>
+<p>Useful Commands When Using Moltemplate in Vim:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">:</span><span class="o">/</span><span class="nd">@bond</span><span class="p">:</span><span class="n">type3</span>           <span class="o">&lt;--</span> <span class="n">highlight</span> <span class="n">the</span> <span class="n">words</span> <span class="n">type3</span><span class="o">.</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">:</span><span class="o">%</span><span class="n">s</span><span class="o">///</span><span class="n">g</span>                 <span class="o">&lt;--</span> <span class="n">delete</span> <span class="n">the</span> <span class="n">highlighted</span> <span class="n">words</span><span class="o">.</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">s</span><span class="o">/</span><span class="nd">@atom</span><span class="p">:</span><span class="n">n1</span> <span class="o">/</span><span class="nd">@atom</span><span class="p">:</span><span class="n">n</span> <span class="o">/</span><span class="n">g</span>      <span class="o">&lt;--</span> <span class="n">replace</span> <span class="nb">all</span> <span class="nd">@atom</span><span class="p">:</span><span class="n">n1</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">file</span> <span class="n">to</span> <span class="nd">@atom</span><span class="p">:</span><span class="n">n</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020-2024, Daisuke Kuroshima, Jutta Rogal.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
