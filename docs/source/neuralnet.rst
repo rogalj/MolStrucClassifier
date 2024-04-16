@@ -236,7 +236,7 @@ Compilation
 
 The NN fitting and testing code can be used either with `Intel MKL <https://software.intel.com/en-us/mkl>`_ or `OpenBLAS <https://www.openblas.net>`_ which needs to be installed on the system the code is supposed to run on.
 
-(New York University cluster specific setup is explained `here <New York University clusters_>`_)
+(New York University cluster specific setup is explained :ref:`here <NYU>`)
 
 Linux machines
 """""""""""""""
@@ -289,40 +289,4 @@ The code can then be compiled using
 
 which will produce an executable ``Machine_Learning.exe``.  This executable will run in parallel with the number of threads given in the input file.
 
-New York University clusters
-""""""""""""""""""""""""""""""
-Greene computing cluster
-+++++++++++++++++++++++++++
-
-On Greene, all the necessary Intel MKL libraries and compilers should be installed.  They are accessible by loading the corresponding modules, e.g.
-
-.. code:: console
-
-    module load openmpi/intel/4.1.1
-
-Then the provided ``Makefile`` can be use and the code is compiled by
-
-.. code:: console
-
-   make
-
-which will produce an executable ``ml-classification.exe``.  This executable will run in parallel with the number of threads given in the input file.
-
-Rusalka computing cluster
-+++++++++++++++++++++++++++
-
-On Rusalka, all the necessary Intel MKL libraries and compilers should be installed.  They are accessible by loading the corresponding modules, e.g.
-
-.. code:: console
-
-    module load intel/17.0.0.098
-    module load openmpi/3.1.3
-
-Then the provided ``Makefile`` can be use and the code is compiled by
-
-.. code:: console
-
-   make
-
-which will produce an executable ``ml-classification.exe``.  This executable will run in parallel with the number of threads given in the input file.
 
