@@ -1,7 +1,7 @@
 # classifierCVs
 
 [![arXiv](https://img.shields.io/badge/arXiv-2404.00155-b31b1b.svg)](https://doi.org/10.48550/arXiv.2404.00155)
-
+[![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 
 
 
