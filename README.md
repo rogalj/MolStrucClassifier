@@ -15,7 +15,7 @@
 
 
 <p align="justify"> 
-  ClassifierCVs is a local structure classification tool based on NN 
+  ClassifierCVs is a local structure classification tool based on NN. 
 </p>
 
 The following paper describe details of the local structure classification. 
