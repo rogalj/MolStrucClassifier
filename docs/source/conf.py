@@ -10,10 +10,10 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-#import os
-#import sys
-#import sphinx_rtd_theme
-#from datetime import date
+import os
+import sys
+import sphinx_rtd_theme
+from datetime import date
 
 
 # sys.path.insert(0, os.path.abspath('.'))
@@ -22,7 +22,7 @@
 # -- Project information -----------------------------------------------------
 
 project = 'MolStrucClassifier'
-copyright = '2020-{}, Daisuke Kuroshima, Jutta Rogal'
+copyright = '2020-{}, Daisuke Kuroshima, Jutta Rogal'.format(date.today().year)
 author = 'Daisuke Kuroshima, Jutta Rogal'
 
 
