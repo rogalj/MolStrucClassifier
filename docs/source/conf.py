@@ -13,7 +13,7 @@
 import os
 import sys
 import sphinx_rtd_theme
-#from datetime import date
+from datetime import date
 
 
 # sys.path.insert(0, os.path.abspath('.'))
@@ -22,7 +22,7 @@ import sphinx_rtd_theme
 # -- Project information -----------------------------------------------------
 
 project = 'MolStrucClassifier'
-copyright = '2020-{}, Daisuke Kuroshima, Jutta Rogal'
+copyright = '2020-{}, Daisuke Kuroshima, Jutta Rogal'.format(date.today().year)
 author = 'Daisuke Kuroshima, Jutta Rogal'
 
 
