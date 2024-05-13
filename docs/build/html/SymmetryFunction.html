@@ -1,0 +1,481 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Symmetry Function codes (molvec_lib) &mdash; MolStrucClassifier  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_extra.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="LAMMPS atom style (USER-ATOM-VEC-FULL2)" href="FULL2.html" />
+    <link rel="prev" title="How To Install" href="Install.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> MolStrucClassifier
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="Install.html">How To Install</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Symmetry Function codes (molvec_lib)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#ver1-0">ver1.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#data-preparation">Data Preparation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stand-alone">Stand Alone</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#connecting-with-lammps">Connecting with LAMMPS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#parameters">Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#output-files">Output files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ver2-0">ver2.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Data Preparation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Output files</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="FULL2.html">LAMMPS atom style (USER-ATOM-VEC-FULL2)</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="How_to_use.html">How to link with LAMMPS and run</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Ovito.html">Get data file using ovito</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="moltemplate.html">How to prepare files using moltemplate</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Ogre.html">How to use Ogre</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="neuralnet.html">Neural Network Classification Code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Parameters.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Sample.html">Sample_code</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MolStrucClassifier</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Symmetry Function codes (molvec_lib)</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/SymmetryFunction.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="symmetry-function-codes-molvec-lib">
+<span id="symmetryfunction"></span><h1>Symmetry Function codes (molvec_lib)<a class="headerlink" href="#symmetry-function-codes-molvec-lib" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="ver1-0">
+<h2>ver1.0<a class="headerlink" href="#ver1-0" title="Permalink to this headline">¶</a></h2>
+<p>Here, we have codes that calculate the symmetry function and NN by itself or using LAMMPS. <a class="reference internal" href="#ver2-0">ver2.0</a> is available, so make sure you use the right one.</p>
+<div class="section" id="data-preparation">
+<h3>Data Preparation<a class="headerlink" href="#data-preparation" title="Permalink to this headline">¶</a></h3>
+<p>To run this code, you need the following files:</p>
+<ol class="arabic simple">
+<li><p>trajectory file (.dump)</p></li>
+</ol>
+<p>If you wish to get the symmetry function result or neural network result using the symmetry function, you can use this code. Currently, this code accepts a dump file as input. Inside the dump file, you need to have the data in the following order, which is the same as LAMMPS full atom style.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">ITEM: ATOMS id mol element x y z vx vy vz</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Make sure that the element type is written in numbers not in character or string! Also make sure that the element type you use for symmetry function is unique. If it is not, you cannot use ver1.0. Check <a class="reference internal" href="#ver2-0">ver2.0</a> instead.</p>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Input file</p></li>
+</ol>
+<p>The INPUT.dat file stores all the parameters such as the number of symmetry functions, parameters for the symmetry function, system information, etc. Make sure you check each line and adjust values accordingly. An example of this file is stored in <a class="reference external" href="https://github.com/rogalj/MolStrucClassifier/tree/main/molvec_lib/ver1.0/example">example</a>.</p>
+<ol class="arabic simple" start="3">
+<li><p>Weight file (only for NN calculation)</p></li>
+</ol>
+<p>The weight file is necessary in the running directory. If you wish to calculate the symmetry function without using the neural network, you can use the sample weight file instead. Make sure you change the first number and last number of the second line to the number of input and the number of output.</p>
+</div>
+<div class="section" id="stand-alone">
+<h3>Stand Alone<a class="headerlink" href="#stand-alone" title="Permalink to this headline">¶</a></h3>
+<p>Firstly, you need to load the module as follows before running the code:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">module load intel/19.1.2</span>
+</pre></div>
+</div>
+<p>Then, you need to compile files using:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">make</span>
+</pre></div>
+</div>
+<p>When you run the code you need to have the following command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">./sa trajectory_file file_type  name_of_input_data.data</span>
+</pre></div>
+</div>
+<p>The file_type needs to be one of the following:</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 74%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>File Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>lammps_vec</p></td>
+<td><p>Use this command if you have an orthogonal box.</p></td>
+</tr>
+<tr class="row-odd"><td><p>lammps_vec_tri</p></td>
+<td><p>Use this command if you have a non-orthogonal box.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="connecting-with-lammps">
+<h3>Connecting with LAMMPS<a class="headerlink" href="#connecting-with-lammps" title="Permalink to this headline">¶</a></h3>
+<p>If you want to connect this to LAMMPS, please refer to the instructions on how to install and use it in the <a class="reference external" href="file:///home/drk354/Downloads/MolStrucClassifier-main/docs/build/html/Install.html#install-lammps-code">Install LAMMPS code</a>.</p>
+</div>
+<div class="section" id="parameters">
+<h3>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h3>
+<p>The following is the basic information you need for the symmetry function code.</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 74%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>num_sf</p></td>
+<td><p>Number of total symmetry functions</p></td>
+</tr>
+<tr class="row-odd"><td><p>num_pvsf_type</p></td>
+<td><p>Number of point-vector symmetry functions</p></td>
+</tr>
+<tr class="row-even"><td><p>triclinic</p></td>
+<td><p>True if this is in a non-orthogonal box</p></td>
+</tr>
+<tr class="row-odd"><td><p>center atom</p></td>
+<td><p>Element id of the center atom. Must be unique in the molecule</p></td>
+</tr>
+<tr class="row-even"><td><p>atm in molec</p></td>
+<td><p>Number of atoms in the molecule. If you have defect, choose the one with more atoms</p></td>
+</tr>
+<tr class="row-odd"><td><p>cutoffmin</p></td>
+<td><p>Minimum cutoff in angstrom</p></td>
+</tr>
+<tr class="row-even"><td><p>cutoffmax</p></td>
+<td><p>Maximum cutoff in angstrom</p></td>
+</tr>
+<tr class="row-odd"><td><p>symf_calc_or_NN</p></td>
+<td><p>symf_calc if you want to calculate only ithe symmetry function. NN if you want to calculate the NN result</p></td>
+</tr>
+<tr class="row-even"><td><p>NNrdf</p></td>
+<td><p>True if you want to calculate the distance from surface</p></td>
+</tr>
+<tr class="row-odd"><td><p>fullNeigh</p></td>
+<td><p>Number of neighbors within the cutoff. If molecule has fewer neighbors, it will be concidered as surface</p></td>
+</tr>
+</tbody>
+</table>
+<p>The following is the parameter information about the symmetry function. This part functions as a block, when you edit the INPUT.dat file, make sure you have them in the right order.</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 74%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>number_of_para</p></td>
+<td><p>You need to have the number of a specific symmetry function you are using.</p></td>
+</tr>
+<tr class="row-odd"><td><p>point</p></td>
+<td><p>If you use point representation, set as TRUE. If you use point-vector representation, set as FALSE.</p></td>
+</tr>
+<tr class="row-even"><td><p>G2G3</p></td>
+<td><p>If you set TRUE in the “point” column, this should be the next line. Choose a type of symmetry function: G2 or G3.</p></td>
+</tr>
+<tr class="row-odd"><td><p>vec_id</p></td>
+<td><p>If you choose FALSE in the “point” column, write which element id for the atom you use for the vector. These element IDs must be unique in the molecule.</p></td>
+</tr>
+<tr class="row-even"><td><p>Rs</p></td>
+<td><p>If you choose G2 in “G2G3”, write parameters for Rs here separated by space.</p></td>
+</tr>
+<tr class="row-odd"><td><p>eta</p></td>
+<td><p>If you choose G2 in “G2G3”, write parameters for eta here separated by space.</p></td>
+</tr>
+<tr class="row-even"><td><p>kappa</p></td>
+<td><p>If you choose G3 in “G2G3”, write parameters for kappa here separated by space.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="output-files">
+<h3>Output files<a class="headerlink" href="#output-files" title="Permalink to this headline">¶</a></h3>
+<p>Depending on which mode you use, you will get the different output.</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 74%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>file name</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>atominfo.txt</p></td>
+<td><p>Print out molecule type, element type, and coordinate information.</p></td>
+</tr>
+<tr class="row-odd"><td><p>symf_result.txt</p></td>
+<td><p>If you slected symf_calc, this file provides the symmetry function output.</p></td>
+</tr>
+<tr class="row-even"><td><p>new_traj.dump</p></td>
+<td><p>Print out trajectory data with Neural Network output.</p></td>
+</tr>
+<tr class="row-odd"><td><p>run_ave_traj.dump</p></td>
+<td><p>Print out running average of Neural Network output with trajectory data.</p></td>
+</tr>
+<tr class="row-even"><td><p>NNrdf_result.dump</p></td>
+<td><p>In addition to run_ave_traj.dump, it contains the number of local neighbor and distance to the surface</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="ver2-0">
+<h2>ver2.0<a class="headerlink" href="#ver2-0" title="Permalink to this headline">¶</a></h2>
+<p>This is version 2.0 of the Symmetry function codes. In this version, we use a different atom style called full2. providing more flexibility with input molecules. You can still use the version 1.0 code here as well. Ensure you use the right file type. If you are using this version, make sure to also read <a class="reference internal" href="FULL2.html#full2"><span class="std std-ref">LAMMPS atom style (USER-ATOM-VEC-FULL2)</span></a>.</p>
+<div class="section" id="id1">
+<h3>Data Preparation<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>When using this version, make sure you have “sym_type” in trajectory file as follows:</p>
+<p>For version 1.0:</p>
+<p>ITEM: ATOMS id mol element x y z vx vy vz</p>
+<p>For version 2.0:</p>
+<p>ITEM: ATOMS id mol element sym_type x y z vx vy vz</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you want to create a dump file using LAMMPS, you can use the following LAMMPS extension to insert “sym_type”: <a class="reference internal" href="FULL2.html#full2"><span class="std std-ref">LAMMPS atom style (USER-ATOM-VEC-FULL2)</span></a>.</p>
+</div>
+<p>You have two options for the new style. Keep in mind that you can still use the old version too.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">./sa_test trajectory_file file_type  name_of_input_data.data</span>
+</pre></div>
+</div>
+<p>List of available file types:</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 74%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>File Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>lammps_vec</p></td>
+<td><p>Use this command if you have an orthogonal box</p></td>
+</tr>
+<tr class="row-odd"><td><p>lammps_vec_tri</p></td>
+<td><p>Use this command If you have a non-orthogonal box</p></td>
+</tr>
+<tr class="row-even"><td><p>lammps_sym_new</p></td>
+<td><p>NEW: Use this command if you use new version with an orthogonal box</p></td>
+</tr>
+<tr class="row-odd"><td><p>lammps_sym_new_tri</p></td>
+<td><p>NEW: Use this command if you use new version with a triclinic box</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id2">
+<h3>Output files<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>You will get the same output as shown in ver1.0.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="FULL2.html" class="btn btn-neutral float-right" title="LAMMPS atom style (USER-ATOM-VEC-FULL2)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Install.html" class="btn btn-neutral float-left" title="How To Install" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020-2024, Daisuke Kuroshima, Jutta Rogal.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
