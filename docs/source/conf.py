@@ -73,7 +73,7 @@ html_static_path = ['_static']
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'dafeddoc'
+htmlhelp_basename = 'MolStrucClassifier'
 
 
 
@@ -101,7 +101,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'dafed.tex', u'dAFED Documentation',
-     u'Jutta Rogal', 'manual'),
+    (master_doc, 'MolStrucClassifier.tex', u'MolStrucClassifier Documentation',
+     u'Daisuke Kuroshima and Jutta Rogal', 'manual'),
 ]
 
