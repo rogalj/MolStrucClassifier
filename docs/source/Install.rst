@@ -137,12 +137,12 @@ When you make this file, make sure to change the path to the appropriate name fo
    DAFED_LOAD= /home/drk354/MolStrucClassifier/MolStrucClassifier/molvec_lib/ver2.0/libcv_nn.so -ldl
    DAFED_DEPENDENCIES = /home/drk354/MolStrucClassifier/MolStrucClassifier/molvec_lib/ver2.0/libcv_nn.so
    
-After this, go to the `mylammps` directory and type the following commands:
+After this, go to the parent directory and type the following commands:
 
 .. code:: console
 
-   ln -s /home/drk354/MolStrucClassifier/MolStrucClassifier/molvec_lib/ver2.0/Dafed_DK.inc Dafed.inc at the parent directory of lammps src
-   ln -s /home/drk354/MolStrucClassifier/MolStrucClassifier/molvec_lib/ver2.0/dafed_link.h Dafed.h at the parent directory of lammps src
+   ln -s /home/drk354/MolStrucClassifier/MolStrucClassifier/molvec_lib/ver2.0/Dafed_DK.inc Dafed.inc 
+   ln -s /home/drk354/MolStrucClassifier/MolStrucClassifier/molvec_lib/ver2.0/dafed_link.h Dafed.h 
 
 
 Step 4
@@ -184,6 +184,12 @@ Open ``Makefile.package`` and add the following to connect the source directory 
 .. code:: console
 
    PKG_LIB =    $(DAFED_LOAD)
+
+Open ``Makefile.package.setting`` and add the following to connect at the end of the file:
+
+.. code:: console
+
+   include ../../Dafed.inc
 
 
 
