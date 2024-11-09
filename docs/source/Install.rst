@@ -162,10 +162,10 @@ You are almost there! The next step is to install some additional LAMMPS package
    +---------------+
    | MOLECULE      |
    +---------------+
-   | OPT           |
-   +---------------+
    |EXTRA-MOLECULE |
    +---------------+
+
+If you use the old LAMMPS from 2019 or before, you also need to add package called 'OPT'. 
 
 The command you need to type to get these additional packages is as folows:
 
@@ -185,7 +185,7 @@ Open ``Makefile.package`` and add the following to connect the source directory 
 
    PKG_LIB =    $(DAFED_LOAD)
 
-Open ``Makefile.package.setting`` and add the following to connect at the end of the file:
+Open ``Makefile.package.setting`` and add the following line at the end of the file:
 
 .. code:: console
 
