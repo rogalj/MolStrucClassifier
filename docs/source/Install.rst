@@ -12,7 +12,7 @@ This page will explain how to install all the packages you need for this project
 Requirement
 -----------
 
-This package requires C++ compilar. Environments under intel 19.1.2 was tested
+This package requires a C++ compiler". Environments under intel 19.1.2 were tested
 
 
 Install libraly code (MolStrucClassifier)
@@ -33,7 +33,7 @@ If you already installed the repository, you can update it by typing:
 
    git pull
 
-If you are an editter, check the following command as well. 
+If you are an editor, check the following command as well. 
 
 If you make any changes and want to add directories/files to the GitHub repository, you can upload them by typing:
 
@@ -48,7 +48,7 @@ The following command can check the status of the local repository. This command
    git status
    
 
-When you upload the directories/files, you can also add a comment. You can add them like the following:
+When you upload the directories/files, you can also add a comment as following:
 
 .. code:: console
 
