@@ -431,80 +431,6 @@ void DAFED::read_input(const string &inputfile, DAFED::CParameter &parameter)
 				else
 					parameter.NNrdf = 0;
 			}
-			if (string1.substr(0,16) =="num_output      ")  //number of NN output 
-			{
-				string test;
-                                line >> test;                   //separate by space
-
-                                line >> test;
-				parameter.nnout = stoi(test);
-			}
-			if (string1.substr(0,16) =="pathpoints      ")  //number of NN output 
-                        {
-                                string test;
-                                line >> test;                   //separate by space
-
-                                line >> test;
-                                parameter.pathpoints = stoi(test);
-				parameter.Ppoints1 = new double[parameter.pathpoints];
-				parameter.Ppoints2 = new double[parameter.pathpoints];
-                        }
-			if (string1.substr(0,16) =="Ppoints1        ")  //number of NN output 
-                        {
-                                string test;
-                                line >> test;                   //separate by space
-				
-				//getline(if_input,string1);
-                                //istringstream line3(string1);
-				for(int i = 0;i<parameter.pathpoints; i++)
-                                {
-					line >> test;
-					parameter.Ppoints1[i] = stod(test);
-				}
-                        }
-			if (string1.substr(0,16) =="Ppoints2        ")  //number of NN output 
-                        {
-                                string test;
-                                line >> test;                   //separate by space
-
-                                for(int i = 0;i<parameter.pathpoints; i++)
-                                {
-					line >> test;
-					parameter.Ppoints2[i] = stod(test);
-				}
-                        }
-			if (string1.substr(0,16) =="CV_index        ")  //number of NN output
-			{
-				string test;
-				line >> test;                   //separate by space
-				
-				line >> test;
-				parameter.CV[0] = stoi(test);
-				line >> test;
-				parameter.CV[1] = stoi(test);
-
-			}
-			if (string1.substr(0,16) =="sym_type        ")
-			{
-				string test;
-				line >> test;
-
-				line >> test;
-				if (test=="True")
-					parameter.sym_new_flag = true;
-				else
-					parameter.sym_new_flag = false;
-			
-			}
-			if (string1.substr(0,16) =="nmol_in_system  ")
-                        {
-                                string test;
-                                line >> test;
-
-                                line >> test;
-				parameter.nmol = stoi(test);
-                        }
-
 		}while (getline(if_input,string1));  //do until end of the file
 	}
 	else
@@ -801,6 +727,7 @@ void DAFED::read_dafed_input(const string &filename, CParameter &para, EXvariabl
 {
 	ifstream inFile;
 	char dummy_char[256];
+	int subtotal = 0;
 
 	inFile.open(filename.c_str(),ifstream::in);
 	
@@ -1277,6 +1204,128 @@ void DAFED::read_dafed_input(const string &filename, CParameter &para, EXvariabl
 				continue;
 			}
 
+			//DKadded:
+			if(0==strncmp(compstring,"G2_point        ",16)){
+				para.nsfg2point = atoi(col[1]);
+				cout << "para.nsfg2point = " << para.nsfg2point << endl;
+				continue;
+			}
+			if(0==strncmp(compstring,"G2p_Rs          ",16)){
+				for (int sf = subtotal; sf < subtotal + para.nsfg2point; sf++)
+					para.RskappaLst[sf] = atof(col[sf-subtotal+1]);
+				continue;
+			}
+			if(0==strncmp(compstring,"G2p_eta         ",16)){
+				for (int sf = subtotal; sf < subtotal + para.nsfg2point; sf++)
+					para.etaLst[sf] = atof(col[sf-subtotal+1]);
+				continue;
+			}
+
+			if(0==strncmp(compstring,"G2_CO           ",16)){
+				para.nsfg2CO = atoi(col[1]);
+				subtotal += para.nsfg2point;
+				continue;
+			}
+			if(0==strncmp(compstring,"G2CO_Rs         ",16)){
+				for (int sf = subtotal; sf < subtotal+para.nsfg2CO; sf++)
+					para.RskappaLst[sf] = atof(col[sf-subtotal+1]);
+				continue;
+			}
+			if(0==strncmp(compstring,"G2CO_eta        ",16)){
+				for (int sf = subtotal; sf < subtotal+para.nsfg2CO; sf++)
+					para.etaLst[sf] = atof(col[sf-subtotal+1]);
+				continue;
+			}
+
+			if(0==strncmp(compstring,"G2_NN           ",16)){
+				para.nsfg2NN = atoi(col[1]);
+				subtotal += para.nsfg2CO;
+				continue;
+			}
+			if(0==strncmp(compstring,"G2NN_Rs         ",16)){
+				for (int sf = subtotal; sf < subtotal+para.nsfg2NN; sf++)
+					para.RskappaLst[sf] = atof(col[sf-subtotal+1]);
+				continue;
+			}
+			if(0==strncmp(compstring,"G2NN_eta        ",16)){
+				for (int sf = subtotal; sf < subtotal+para.nsfg2NN; sf++)
+					para.etaLst[sf] = atof(col[sf-subtotal+1]);
+				continue;
+			}
+
+			if(0==strncmp(compstring,"G3_point        ",16)){
+				para.nsfg3point = atoi(col[1]);
+				subtotal += para.nsfg2NN;
+				continue;
+			}
+			if(0==strncmp(compstring,"G3p_Rs          ",16)){
+				for (int sf = subtotal; sf < subtotal+para.nsfg3point; sf++)
+				{
+					para.RskappaLst[sf] = atof(col[sf-subtotal+1]);
+					para.etaLst[sf] = -1;
+				}
+				continue;
+			}
+
+			if(0==strncmp(compstring,"G3_CO           ",16)){
+				para.nsfg3CO = atoi(col[1]);
+				subtotal += para.nsfg3point;
+				continue;
+			}
+			if(0==strncmp(compstring,"G3CO_Rs         ",16)){
+				for (int sf = subtotal; sf < subtotal+para.nsfg3CO; sf++)
+				{
+					para.RskappaLst[sf] = atof(col[sf-subtotal+1]);
+					para.etaLst[sf] = -1;
+				}
+				continue;
+			}	
+			
+			if(0==strncmp(compstring,"G3_NN           ",16)){
+				para.nsfg3NN = atoi(col[1]);
+				subtotal += para.nsfg3CO;
+				continue;
+			}
+			if(0==strncmp(compstring,"G3NN_Rs         ",16)){
+				for (int sf = subtotal; sf < subtotal+para.nsfg3NN; sf++)
+				{
+					para.RskappaLst[sf] = atof(col[sf-subtotal+1]);
+					para.etaLst[sf] = -1;
+				}
+				continue;
+			}
+			
+			
+			if(0==strncmp(compstring,"center_atom     ",16)){
+				para.center = atoi(col[1]);
+				continue;
+			}
+			if(0==strncmp(compstring,"atm_in_molec    ",16)){
+				para.natm = atoi(col[1]);
+				continue;
+			}
+			if(0==strncmp(compstring,"num_of_NN_out    ",16)){
+				para.nnout = atoi(col[1]);
+				continue;
+			}
+			if(0==strncmp(compstring,"eleOfvec1        ",16)){
+				para.COvectype[0] = atoi(col[1]);
+				para.COvectype[1] = atoi(col[2]);
+				continue;
+			}
+			if(0==strncmp(compstring,"eleOfvec2        ",16)){
+				para.NNvectype[0] = atoi(col[1]);
+				para.NNvectype[1] = atoi(col[2]);
+				continue;
+			}
+			if(0==strncmp(compstring,"cutoff           ",16)){
+				para.rmax0 = atof(col[1]);
+				continue;
+			}
+			if(0==strncmp(compstring,"cutoff_diff      ",16)){
+				para.rmin0 = para.rmax0 - atof(col[1]);
+				continue;
+			}
 
 			//print out text string
 			if(0==strncmp(compstring,"#",1))
@@ -1397,11 +1446,7 @@ void DAFED::get_Q_vec_lmpneigh_vec_new(CAtom *molecules, Cmolpoint *molec, CNeig
 	//this is for nex=2 with 0=BCC and 1=A15	
 	//and     for nex=1 with 0=A15
 	//
-//	auto begin  = chrono::high_resolution_clock::now();
 	get_total_derivatives_molvec_vec_lmp(molecules, molec, natoms, parameter, exvar,lmpneigh);
-//	auto end = chrono::high_resolution_clock::now();
-//	auto elapsed = chrono::duration_cast<chrono::nanoseconds>(end - begin);
-//	begin  = chrono::high_resolution_clock::now();
 	//determine values of extended variables
 	//if this is done parallel in lammps, then this is only the local sum
 	for(iex=0;iex<nex;iex++){
@@ -1413,11 +1458,11 @@ void DAFED::get_Q_vec_lmpneigh_vec_new(CAtom *molecules, Cmolpoint *molec, CNeig
 	
 
 	if(nex==2){				//this is for nex=2 and  0=BCC and 1=A15
-		outNN_index[0] = parameter.CV[0];		//U1
-		outNN_index[1] = parameter.CV[1];		//U4
+		outNN_index[0] = 0;		//U1
+		outNN_index[1] = 1;		//U4
 	}
 	else if(nex==1){			//this is for nex=1 and 0=U1
-		outNN_index[0] = parameter.CV[0];		//A15
+		outNN_index[0] = 0;		//A15
 	}
 	else{
 		cerr<<"\n\n\t!!ERROR!! In get_Q_3_lmpneighbour, no. of extended variable nex must be either 1 or 2!\n";
@@ -1444,8 +1489,6 @@ void DAFED::get_Q_vec_lmpneigh_vec_new(CAtom *molecules, Cmolpoint *molec, CNeig
 		Qlocal[i] = Qlocal[i]/nmol;
 	}
 	//print value of order parameter
-//	end = chrono::high_resolution_clock::now();
-//	elapsed = chrono::duration_cast<chrono::nanoseconds>(end - begin);
 }
 
 
@@ -1536,8 +1579,7 @@ void DAFED::get_vec_symmetry_NN_3_lmpneighbour_vec_lmp(CAtom *atoms, Cmolpoint *
                         atoms[molec[mi].center].sfg[i] = molec[mi].symf;
         }
 	//calculate NN output and derivatives
-	if(parameter.sym_new_flag)get_NN_sym_new(atoms,parameter.center,natoms,NNvar);
-        else get_NN(atoms,parameter.center,natoms,NNvar);
+	get_NN(atoms,parameter.center,natoms,NNvar);
 }
 
 //Calculates symmetry function and NN lammps only
@@ -1545,9 +1587,9 @@ void DAFED::get_vec_symmetry_NN_vec_lmp_short_test(CAtom *atoms, Cmolpoint *mole
 {
 	int natoms = lmpneigh.inum;
 	symf_multi_vec_lmp_short_test(atoms,molec,parameter,lmpneigh);
+	
 	//calculate NN output and derivatives
-	if(parameter.sym_new_flag)get_NN_sym_new(atoms,parameter.center,natoms,NNvar);
-	else get_NN(atoms,parameter.center,natoms,NNvar);
+	get_NN(atoms,parameter.center,natoms,NNvar);
 }
 
 
@@ -2485,17 +2527,19 @@ void DAFED::get_allNeighbourDistances_gen_vec_lmp(CAtom *atoms, Cmolpoint *molec
 	for (int ti = 0;ti<nop;ti++)	//loop over all atoms
 	{
 		//DK: This is the part store all the symmetry function result that will be used for NN
+		for (int k = 0;k<3;k++){	//loop over xyz
+			atoms[ti].COvec[k] = 0.0;
+			atoms[ti].NNvec[k] = 0.0;
+
+		}			//loop over xyz
 		for (int tsym = 0; tsym < nsfg; tsym++)	//loop over number of symmetry function
 			atoms[ti].sfg[tsym] = 0;
-		//assigning the center of the molecule and counting the number of mole.
-		
+		//assigning the center of the molecule and counting the number of mole. 
 		if (atoms[ti].eletype == parameter.center)	
 		{
 			molec[molcount].center = ti;
-			atoms[ti].sa_mol_id = molcount;
 			molcount++;
 		}
-		
 	}				//loop over all atoms
 	int atmcount[molcount];	//count number of important atoms in the molecule counted. For urea, it have to be 4 at the end
 	lmpneigh.lmpmol = molcount;
@@ -2539,6 +2583,8 @@ void DAFED::get_allNeighbourDistances_gen_vec_lmp(CAtom *atoms, Cmolpoint *molec
 		molec[moli].atom_ID[0] = tii;
 		molec[moli].vector_ID[0] = tii;			//point representation 
 		molec[moli].vector_ID[1] = tii;			//this is dammy, but for the point representation.
+
+
 
 
 		for (int tjj=0; tjj<jnum; tjj++)		//loop over all neighbors
@@ -2596,7 +2642,6 @@ void DAFED::get_allNeighbourDistances_gen_vec_lmp(CAtom *atoms, Cmolpoint *molec
 				}
 			}
 		}
-
 	}
 	//Validation and assiging CO and NN vector for the own molecule.  
 	for (int mi = 0;mi<molcount;mi++){				//Validation for molec and getting atoms' molvec info.
@@ -2621,192 +2666,12 @@ void DAFED::get_allNeighbourDistances_gen_vec_lmp(CAtom *atoms, Cmolpoint *molec
 		{
 			atm1 = molec[mi].vector_ID[sfg*2];
 			atm2 = molec[mi].vector_ID[sfg*2+1];
-			//get_molvec_pbc(atm1,atm2,molec[mi].vecpoint[sfg], atoms,box,parameter.triclinic);
+			get_molvec_pbc(atm1,atm2,molec[mi].vecpoint[sfg], atoms,box,parameter.triclinic);
 			get_molvec_pbc(atm1,atm2,atoms[molec[mi].center].vecpoint[sfg], atoms,box,parameter.triclinic);
 		}
-	}
-}
-
-
-
-//lammps only. calculate neighbor information. 
-void DAFED::get_allNeighbourDistances_gen_vec_lmp_symtype(CAtom *atoms, Cmolpoint *molec, CNeighvariables &lmpneigh, int &natoms, double *box, CParameter &parameter)
-{
-	double d;		//absolute distance
-	double diffx,diffy,diffz;	//xyz distance from target to neighbour 
-	double fc, dfc;			//this is for cutoff and derivative of cutoff
-        int jnum;                       //number of neighbours for the specific target. 
-        int *jlist;                     //neighbour list
-	int nop = lmpneigh.inum;		//number of real atom in the proc
-	double rmin = parameter.rmin0;		//cutoff min
-	double rmax = parameter.rmax0;		//cutoff max
-	int nsfg=parameter.nsfg;		//assigning number of symmetry function
-	int atm1 = -1, atm2=-1;	//initializing the atom id
-	int molcount = 0;			//count number of mol in each
-	int natm  = parameter.natm;
-	
-	////validate the size of the box
-	if (rmax+2 > 0.5*box[0] || rmax+2 > 0.5*box[1] || rmax+2 > 0.5*box[2])			
-	{
-		cout << "cutoff(cutoff+skin(2)) is bigger than 1/2 of the box size. " << endl;
-		cout << "box(x) = " << box[0] << endl;
-		cout << "box(y) = " << box[1] << endl;
-		cout << "box(z) = " << box[2] << endl;
-		exit(1);
-	}	
-	//initializing atom class parameters. 
-	for (int ti = 0;ti<nop;ti++)	//loop over all atoms
-	{
-		for (int tsym = 0; tsym < nsfg; tsym++)	//loop over number of symmetry function
-			atoms[ti].sfg[tsym] = 0;
-		//assigning the center of the molecule and counting the number of mole.
-		if (atoms[ti].symtype == parameter.center)
-                {
-                       	molec[molcount].center = ti;
-                       	atoms[ti].sa_mol_id = molcount;
-                       	molcount++;
-                }
-		
-	}				//loop over all atoms
-	int atmcount[molcount];	//count number of important atoms in the molecule counted. For urea, it have to be 4 at the end
-	lmpneigh.lmpmol = molcount;
-	int dcount[molcount];	//using this for molecule count
-	//initializing molecule class parameters
-	for (int ii = 0;ii<molcount;ii++)	//loop over total mol in the proc
-	{
-		molec[ii].G2vecCO = 0;
-		molec[ii].G2vecNN = 0;
-		molec[ii].G3vecCO = 0;
-		molec[ii].G3vecNN = 0;
-		molec[ii].point2 = 0;
-		molec[ii].point3 = 0;
-		molec[ii].n_neighbors = 0;
-		for (int tatm = 0;tatm<parameter.natm;tatm++)
-			molec[ii].atom_ID[tatm] = -1;		//ID 0 --> C, 1--> O, 2--> N1, 3--> N2 4-7 -->H
-		for (int tn = 0;tn<MAXNUMBEROFNEIGHBORS;tn++)	//loop for other parameters that need at least same number as 
-		{
-			molec[ii].fcv[tn] = 0.0;
-			molec[ii].neighbors[tn] = -1;
-			molec[ii].neighdist[tn] = 0;
-			for (int k = 0;k<3;k++){	//loop over xyz for other parameters
-				molec[ii].dfcvdx[tn][k] = 0.0;
-				molec[ii].diff[tn][k] = 0;
-			}//end loop for xyz
-		}//end loop for other parameters
-	}//end of total mol loop
-	parameter.npairs = 0;
-	
-	for (int moli = 0; moli < molcount; moli++)
-	{
-		atmcount[moli] = 1;				//atmcount is 1D array and it should have 4 at the end. 
-		dcount[moli]=0;
-		int tii = molec[moli].center;			//get the center info, in the other words, this is getting the local id of carbon
-		int ti = lmpneigh.ilist[tii];			//get local id? I think this is same as tii. Need to comfirm. 
-		jlist = lmpneigh.firstneigh[ti];		//list of ti neighbors
-		jnum = lmpneigh.numneigh[ti];                   //number of ti neighbors for ti
-
-
-		//I am checking if the center is one of the element for the vector or not. If not, center atom will be added to the end of the atom_ID list. 
-		molec[moli].atom_ID[0] = tii;
-		molec[moli].vector_ID[0] = tii;			//point representation 
-		molec[moli].vector_ID[1] = tii;			//this is dammy, but for the point representation.
-
-
-		for (int tjj=0; tjj<jnum; tjj++)		//loop over all neighbors
-		{	
-			int tj = jlist[tjj];
-                        tj &= MY_NEIGHMASK;
-			if(tii==tj)continue;			//if it is a same atom, skip it. 
-			
-
-			if (atoms[tj].symtype == parameter.center) 		//pass only carbon/center of the mass here
-			{
-				d = get_absDistance(tii,tj,diffx,diffy,diffz,atoms,box,parameter.triclinic);
-				if(d > rmax)continue;
-				if (d <= rmax){
-					molec[moli].neighbors[dcount[moli]] = tj;   //neighbour id
-				//	molec[moli].neighbors[dcount[moli]] = atoms[tj].sa_mol_id;   //neighbour molec id
-					molec[moli].neighdist[dcount[moli]] = d;
-				
-					molec[moli].diff[dcount[moli]][0] = diffx;
-					molec[moli].diff[dcount[moli]][1] = diffy;
-					molec[moli].diff[dcount[moli]][2] = diffz;
-					if (abs(d) <= rmin){
-						molec[moli].fcv[dcount[moli]] = 1.0;
-					}
-					else if (rmin < abs(d) && abs(d) <= rmax){					                                        
-						fc = 0.5*(cos((d-rmin)*M_PI/(rmax-rmin))+1.0);
-						molec[moli].fcv[dcount[moli]] = fc;                 //correct
-						dfc = -0.5*M_PI/(rmax-rmin)*sin((d-rmin)*M_PI/(rmax-rmin));
-						for (int k = 0;k<3;k++)
-						{
-							molec[moli].dfcvdx[dcount[moli]][k] = -dfc*molec[moli].diff[dcount[moli]][k]/d;	
-						}
-					}
-					dcount[moli] +=1;
-					
-				}
-			}
-			
-			if (atmcount[moli]==natm)continue;		//If you have all the atom info for this molecule, no need to search others
-			if (atoms[tii].moltype != atoms[tj].moltype)continue;          //If it is not in the same mol or C, I will skip
-			
-		
-			
-			molec[moli].atom_ID[atmcount[moli]] = tj;
-			atmcount[moli]++;
-		}
-		for (int sfgt = 2; sfgt < 2*parameter.symftype; sfgt++)
-		{
-			for (int ti = 0; ti < natm; ti++)
-			{
-				if(molec[moli].atom_ID[ti]==-1)break;			//If it does not exist, we skip it. 
-				if (parameter.vectype[sfgt] == atoms[molec[moli].atom_ID[ti]].symtype)
-				{
-					molec[moli].vector_ID[sfgt] = molec[moli].atom_ID[ti];
-					break;
-				}
-			}
-		}
-	}
-	//Validation and assiging CO and NN vector for the own molecule.  
-	for (int mi = 0;mi<molcount;mi++){				//Validation for molec and getting atoms' molvec info.
-/*commented out because if you have defect that has different atomic number, it would not work. Otherwise, you can put these comments back. 
- 		if (atmcount[mi] != natm)	
-		{
-			cout << "Warning: some of the atoms in the molecule are not detected!" << endl;	
-			cout << "molec[mi].center: " << molec[mi].center << endl;
-			cout << "atmcount[mi] : " << atmcount[mi] << endl;
-			exit(1);
-		}
-*/		molec[mi].n_neighbors = dcount[mi];             //DK: this is for assignening number of neighbors
-		if (dcount[mi]>MAXNUMBEROFNEIGHBORS)
-		{
-			cout << "dcount[mi] = "  << dcount[mi] << endl;
-			cout << "You will have arrocation error. MAX you can hold is " << MAXNUMBEROFNEIGHBORS << " and now you have dcount[mi] " << dcount[mi] << endl;
-			cout<<"Exiting programme..."<<endl;
-			exit(1);
-		}
-
-		for (int sfg = 1; sfg < parameter.symftype; sfg++)
-		{
-			atm1 = molec[mi].vector_ID[sfg*2];
-			atm2 = molec[mi].vector_ID[sfg*2+1];
-			//get_molvec_pbc(atm1,atm2,molec[mi].vecpoint[sfg], atoms,box,parameter.triclinic);
-			get_molvec_pbc(atm1,atm2,atoms[molec[mi].center].vecpoint[sfg], atoms,box,parameter.triclinic);
-			//cout <<"parameter.symftype = " << parameter.symftype << endl;
-		}
-		//cout << "molec[mi].vecpoint[sfg] = " << molec[mi].vecpoint[1][0] << endl;
-		//cout << "molec[mi].vecpoint[sfg] = " << molec[mi].vecpoint[2][0] << endl;
-		//cout << "molec[mi].vecpoint[sfg] = " << molec[mi].vecpoint[1][0] << endl;
-		//cout << "molec[mi].vecpoint[sfg] = " << molec[mi].vecpoint[2][0] << endl;
 		
 	}
 }
-
-
-
-
 
 //get distance between two atoms
 double DAFED::get_absDistance(int ti ,int tj,double &diffx ,double &diffy,double &diffz, CAtom *molecules, double *box, bool triclinic)
@@ -2815,46 +2680,46 @@ double DAFED::get_absDistance(int ti ,int tj,double &diffx ,double &diffy,double
 	diffx = molecules[tj].pos[0] - molecules[ti].pos[0];
   	diffy = molecules[tj].pos[1] - molecules[ti].pos[1];
   	diffz = molecules[tj].pos[2] - molecules[ti].pos[2];
-	if (!(triclinic))
+ 	if (!(triclinic))
 	{
   		//nearest image
-  		while (diffx >  box[0]/2.0) {diffx = diffx - box[0];};
-  		while (diffx < -box[0]/2.0) {diffx = diffx + box[0];};
-  		while (diffy >  box[1]/2.0) {diffy = diffy - box[1];};
-  		while (diffy < -box[1]/2.0) {diffy = diffy + box[1];};
-  		while (diffz >  box[2]/2.0) {diffz = diffz - box[2];};
-  		while (diffz < -box[2]/2.0) {diffz = diffz + box[2];};
+  		if (diffx >  box[0]/2.0) {diffx = diffx - box[0];};
+  		if (diffx < -box[0]/2.0) {diffx = diffx + box[0];};
+  		if (diffy >  box[1]/2.0) {diffy = diffy - box[1];};
+  		if (diffy < -box[1]/2.0) {diffy = diffy + box[1];};
+  		if (diffz >  box[2]/2.0) {diffz = diffz - box[2];};
+  		if (diffz < -box[2]/2.0) {diffz = diffz + box[2];};
 	}
 
 	else
 	{
 		//for z
-		while (diffz > box[2]/2.0)
+		if (diffz > box[2]/2.0)
 		{
 			diffz -= box[2];	//diffz - zbox
 			diffy -= box[3];	//diffy - yz
 			diffx -= box[4];	//diffx - xz
 		}
-		while (diffz < -box[2]/2.0)
+		if (diffz < -box[2]/2.0)
 		{
 			diffz += box[2];	//diffz - zbox
 			diffy += box[3];	//diffy - yz
 			diffx += box[4];	//diffx - xz
 		}
 		//for y
-		while (diffy > box[1]/2.0)
+		if (diffy > box[1]/2.0)
 		{
 			diffy -= box[1];	//diffy - ybox
 			diffx -= box[5];	//diffx - xy
 		}
-		while (diffy < -box[1]/2.0)
+		if (diffy < -box[1]/2.0)
 		{
 			diffy += box[1];	//diffy - ybox
 			diffx += box[5];	//diffx - xy
 		}
 		//for x
-		while (diffx >  box[0]/2.0) {diffx = diffx - box[0];};
-        	while (diffx < -box[0]/2.0) {diffx = diffx + box[0];};
+		if (diffx >  box[0]/2.0) {diffx = diffx - box[0];};
+        	if (diffx < -box[0]/2.0) {diffx = diffx + box[0];};
 	}
   	abs = sqrt(diffx*diffx + diffy*diffy + diffz*diffz);
   	return abs;
@@ -2863,76 +2728,52 @@ double DAFED::get_absDistance(int ti ,int tj,double &diffx ,double &diffy,double
 //moving ghost atoms 
 void DAFED::get_molvec_pbc(int ti ,int tj,double *molvec, CAtom *atoms, double *box, bool triclinic)
 {
-	molvec[0] = atoms[tj].pos[0] - atoms[ti].pos[0];
-	molvec[1] = atoms[tj].pos[1] - atoms[ti].pos[1];
-	molvec[2] = atoms[tj].pos[2] - atoms[ti].pos[2];
 	if (!(triclinic))
 	{
-  		while (abs(molvec[0]) >  box[0]/2.0) {
-			if (molvec[0] >  box[0]/2.0)
-				molvec[0] -= box[0];
-			else 
-				molvec[0] += box[0];
-		};
-		
-		while (abs(molvec[1]) >  box[1]/2.0) {
-			if (molvec[1] >  box[1]/2.0)
-				molvec[1] -=  box[1];
-			else
-				molvec[1] +=  box[1];
-		};
-  		
-		while (abs(molvec[2]) >  box[2]/2.0) {
-			if (molvec[2] > box[2]/2.0)
-				molvec[2] -= box[2];
-			else
-				molvec[2] += box[2];
-		};
+		molvec[0] = atoms[tj].pos[0] - atoms[ti].pos[0];
+		molvec[1] = atoms[tj].pos[1] - atoms[ti].pos[1];
+		molvec[2] = atoms[tj].pos[2] - atoms[ti].pos[2];
+
+  		if (molvec[0] >  box[0]/2.0) {molvec[0] = molvec[0] - box[0];};
+  		if (molvec[0] < -box[0]/2.0) {molvec[0] = molvec[0] + box[0];};
+  		if (molvec[1] >  box[1]/2.0) {molvec[1] = molvec[1] - box[1];};
+  		if (molvec[1] < -box[1]/2.0) {molvec[1] = molvec[1] + box[1];};
+  		if (molvec[2] >  box[2]/2.0) {molvec[2] = molvec[2] - box[2];};
+  		if (molvec[2] < -box[2]/2.0) {molvec[2] = molvec[2] + box[2];};			
 	}
 	else
 	{
-		while (abs(molvec[2]) > box[2]/2.0)
+		molvec[0] = atoms[tj].pos[0] - atoms[ti].pos[0];
+		molvec[1] = atoms[tj].pos[1] - atoms[ti].pos[1];
+		molvec[2] = atoms[tj].pos[2] - atoms[ti].pos[2];
+		if (molvec[2] > box[2]/2.0)
 		{
-			if (molvec[2] > box[2]/2.0)
-			{
-				//diffz = diffz - box[2] - box[3] - box[4]; 	//diffz - zbox - yz - xz	
-				molvec[2] -= box[2];	//diffz - zbox
-				molvec[1] -= box[3];	//diffy - yz
-				molvec[0] -= box[4];	//diffx - xz
-			}
-			else
-			{
-				//diffz = diffz + box[2] + box[3] + box[4]; 	//diffz + zbox + yz + xz	
-				molvec[2] += box[2];	//diffz - zbox
-				molvec[1] += box[3];	//diffy - yz
-				molvec[0] += box[4];	//diffx - xz
-			}
+			//diffz = diffz - box[2] - box[3] - box[4]; 	//diffz - zbox - yz - xz	
+			molvec[2] -= box[2];	//diffz - zbox
+			molvec[1] -= box[3];	//diffy - yz
+			molvec[0] -= box[4];	//diffx - xz
 		}
-		
-		while (abs(molvec[1]) > box[1]/2.0)
+		if (molvec[2] < -box[2]/2.0)
 		{
-			if (molvec[1] > box[1]/2.0)
-			{
-				//diffy = diffy - box[1] - box[5];	//diffy - ybox - xy	
-				molvec[1] -= box[1];	//diffy - ybox
-				molvec[0] -= box[5];	//diffx - xy
-			}
-
-			else
-			{
-				//diffy = diffy + box[1] + box[5]; 	//diffy + ybox + xy	
-				molvec[1] += box[1];	//diffy - ybox
-				molvec[0] += box[5];	//diffx - xy
-			}
+			//diffz = diffz + box[2] + box[3] + box[4]; 	//diffz + zbox + yz + xz	
+			molvec[2] += box[2];	//diffz - zbox
+			molvec[1] += box[3];	//diffy - yz
+			molvec[0] += box[4];	//diffx - xz
 		}
-		
-		while (abs(molvec[0]) >=  box[0]/2.0)
+		if (molvec[1] > box[1]/2.0)
 		{
-			if (molvec[0] >  box[0]/2.0)
-				molvec[0] -= box[0];
-			else
-				molvec[0] += box[0];
-		};
+			//diffy = diffy - box[1] - box[5];	//diffy - ybox - xy	
+			molvec[1] -= box[1];	//diffy - ybox
+			molvec[0] -= box[5];	//diffx - xy
+		}
+		if (molvec[1] < -box[1]/2.0)
+		{
+			//diffy = diffy + box[1] + box[5]; 	//diffy + ybox + xy	
+			molvec[1] += box[1];	//diffy - ybox
+			molvec[0] += box[5];	//diffx - xy
+		}
+		if (molvec[0] >  box[0]/2.0) {molvec[0] = molvec[0] - box[0];};
+        	if (molvec[0] < -box[0]/2.0) {molvec[0] = molvec[0] + box[0];};	
 	}
 }
 

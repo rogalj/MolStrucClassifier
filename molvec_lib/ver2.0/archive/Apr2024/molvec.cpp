@@ -1,7 +1,6 @@
 //Need both header and dafed. 
 #include "header.h"	
 #include "dafed.h"
-#include <chrono>
 
 
 //This is mimicing lammps dot3 and len3. Just making a dot product of two vector(3D) and length of the vector
@@ -1312,9 +1311,9 @@ void DAFED::symf_multi_vec_lmp(CAtom *molecules, Cmolpoint *molec, CParameter &p
 				g2 = 0;                         //g2 start from 0 and adds up in the g2
                 		if (molec[mi].center==-1)exit(1);	
 				for (int k = 0; k < 3; k++)     //xyz component of the vector.
-					new_molvecTarget[k] = molecules[molec[mi].center].vecpoint[typeNum][k];//assigning the molvec of target here. typeNum should start from 0 and store xyz of vec in each	
+					new_molvecTarget[k] = molecules[molec[mi].center].vecpoint[typeNum][k];		//assigning the molvec of target here. typeNum should start from 0 and store xyz of vec in each		
 				for (mj = 0; mj < molec[mi].n_neighbors;mj++){  //loop over all the neighbor molecules.      This can be improved if I use the molec.neighbors
-                	        	jmol = molec[mi].neighbors[mj];         //assigning the neighbor atom's id. a.k.a. tj
+                	        	jmol = molec[mi].neighbors[mj];         //assigning the neighbor atom's id
                         	
 					for (int k = 0; k < 3; k++)             //xyz component of the vector for neighbor
                         		{
@@ -1323,7 +1322,9 @@ void DAFED::symf_multi_vec_lmp(CAtom *molecules, Cmolpoint *molec, CParameter &p
                         		cosvec1 = dot3(new_molvecTarget,new_molvecNeighbour)/(len3(new_molvecTarget)*len3(new_molvecNeighbour));          //cos(theta_ikjl)
                         		dr = cosvec1-Rskappa;                                                                     //dr is cosvec1-cosRs
                         		g2 += exp(-eta*dr*dr)*molec[mi].fcv[mj];                                                //sum of G2 for the target molecule
+
                 		}
+			
                		molec[mi].symf = g2;                                                                         //assigning sum of the g2 to each molecule 
 			}
 		}
@@ -1337,6 +1338,7 @@ void DAFED::symf_multi_vec_lmp(CAtom *molecules, Cmolpoint *molec, CParameter &p
 					new_molvecTarget[k] = molecules[molec[mi].center].vecpoint[typeNum][k];            //assigning the molvec of target here. typeNum should start from 0 and store xyz of vec in each		
                 		for (mj = 0; mj < molec[mi].n_neighbors;mj++){  //loop over all the neighbor molecules.      This can be improved if I use the molec.neighbors
                         		jmol = molec[mi].neighbors[mj];         //assigning the neighbor molecule index
+
                         		for (int k = 0; k < 3; k++)             //xyz component of the vector for neighbor
                         		{
                         		        new_molvecNeighbour[k] = molecules[jmol].vecpoint[typeNum][k];          //assigning the molvec
@@ -1345,7 +1347,6 @@ void DAFED::symf_multi_vec_lmp(CAtom *molecules, Cmolpoint *molec, CParameter &p
 					g3 += cos(Rskappa*cosvec1)*molec[mi].fcv[mj];
                 		}
                 	molec[mi].symf = g3;                                                           //assigning sum of the g2 to each molecule 
-//			exit(1);
 			}
 		}
 	}
@@ -1442,13 +1443,14 @@ void DAFED::get_total_derivatives_molvec_vec_lmp(CAtom *atoms, Cmolpoint *molec,
 	int nsfg = parameter.nsfg;
 	double qII,qJJ;
 	int outi;
+	int outNN_index[2];
 	double dgdxICenter[3],dgdxI_1[3],dgdxI_2[3],dgdxJCenter[3],dgdxJ_1[3],dgdxJ_2[3];
 	int typeNum = -1;
+	outNN_index[0] =0;		//output of urea I in the NN
+	//outNN_index[1] =2;		//output of urealiq in the NN
+	outNN_index[1] =1;		//output of urea IV in the NN
 	double nmol = parameter.nmol;
 	double lmpmol = lmpneigh.lmpmol;
-	//auto begin  = chrono::high_resolution_clock::now();
-	//auto end = chrono::high_resolution_clock::now();
-	//auto elapsed = chrono::duration_cast<chrono::nanoseconds>(end - begin);
 	for(int iex=0;iex<parameter.nex;iex++){
 	        for(int ti=0;ti<lmpneigh.nall;ti++){
 			for(int i=0;i<3;i++){
@@ -1456,13 +1458,9 @@ void DAFED::get_total_derivatives_molvec_vec_lmp(CAtom *atoms, Cmolpoint *molec,
 			}
 		}
 	}
-	//end = chrono::high_resolution_clock::now();
-	//elapsed = chrono::duration_cast<chrono::nanoseconds>(end - begin);
-	//begin  = chrono::high_resolution_clock::now();
 	for(mi=0;mi<lmpmol;mi++)		//loop over all molecules original was parameter.nmol, but changed to 10 for testing.
 	{
 		if (molec[mi].center ==-1)break;
-		//begin  = chrono::high_resolution_clock::now();
 		
 		int icenter = molec[mi].center;
 		
@@ -1502,7 +1500,7 @@ void DAFED::get_total_derivatives_molvec_vec_lmp(CAtom *atoms, Cmolpoint *molec,
 				Rskappa = parameter.RskappaLst[mk];
 	                        eta = parameter.etaLst[mk];
 			
-				
+			
 				if (parameter.pointflag[mk])	//point representation
 				{
 					typeNum = -1;	//used in dQ calc. if it is point, it should not consider neighbors
@@ -1658,7 +1656,7 @@ void DAFED::get_total_derivatives_molvec_vec_lmp(CAtom *atoms, Cmolpoint *molec,
 				{
 					for (int k = 0; k < 3; k++)
 					{
-						outi = parameter.CV[iex]*parameter.nsfg + mk;
+						outi = outNN_index[iex]*parameter.nsfg + mk;
 						qII = atoms[icenter].NNgrad[outi]/nmol;
 						qJJ = atoms[jcenter].NNgrad[outi]/nmol;
 						
@@ -1679,6 +1677,8 @@ void DAFED::get_total_derivatives_molvec_vec_lmp(CAtom *atoms, Cmolpoint *molec,
 					}//loop over xyz for calc dQ
 				}//loop over extended variables
 			}//loop over all symmetry functions
+		//cout <<"End of each neigh loop " << endl;
 		}//loop over neighbor molecules
-	}//loop over target molecules	
+		//cout <<"End of each target loop " << endl;
+	}//loop over target molecules
 }

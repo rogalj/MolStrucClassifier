@@ -163,11 +163,6 @@ class CParameter{
 		int symftype;		//number of symmetry function type
 		int *symftypeLst;	//type of symmetry function 
 
-		//////////////////////////////////////ONLY ofr fix_DAFED_gen.cpp////////////////////////////////
-		int CV[2] = {0,1};
-		int pathpoints = 10;		//number of pathCV
-		double *Ppoints1;	//
-		double *Ppoints2;	//
 		/////////////////////////////////////
 		//
 		int npairs;
@@ -420,7 +415,6 @@ struct Nblat{
 
 	void get_allNeighbourDistances_lmp_new(CAtom *, Cmolpoint *, CNeighvariables &, int &, double *, CParameter &);
 	void get_allNeighbourDistances_gen_vec_lmp(CAtom *, Cmolpoint *, CNeighvariables &, int &, double *, CParameter &);
-	void get_allNeighbourDistances_gen_vec_lmp_symtype(CAtom *, Cmolpoint *, CNeighvariables &, int &, double *, CParameter &);
 	void get_allNeighbourDistances_sa(CAtom *, Cmolpoint *, int &, double *, CParameter &);
 	void get_allNeighbourDistances_gen_vec_sa(CAtom *, Cmolpoint *, int &, double *, CParameter &);
 	void get_allNeighbourDistances_sa_sym_new(CAtom *, Cmolpoint *, int &, double *, CParameter &);

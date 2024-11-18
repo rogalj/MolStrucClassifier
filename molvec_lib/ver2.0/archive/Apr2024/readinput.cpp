@@ -98,6 +98,7 @@ void readParticleFile_lammps(const string &filename, double **pos, int &natoms, 
 			confFile>>dummy;
 
 
+			//cout<<posx<<"\n"<<posy<<"\n"<<posz<<"\n";
      
 			pos[ti][0] = posx;
 			pos[ti][1] = posy;

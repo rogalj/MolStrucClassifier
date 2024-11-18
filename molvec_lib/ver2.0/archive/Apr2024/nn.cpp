@@ -5,6 +5,7 @@
 // compute NN for a set of atoms 
 /////////////////////////////////////////////////////////////////
 void DAFED::get_NN(CAtom *molecules,int center, int &natoms, NNvariables &var){ 
+	//cout << "Hey, I'm get_NN" << endl;
 	double *inputs   = new double [var.input];
 	double *outputs  = new double [var.output];
 	double *gradients=new double [var.output*var.input];
@@ -26,6 +27,7 @@ void DAFED::get_NN(CAtom *molecules,int center, int &natoms, NNvariables &var){
 
 }
 void DAFED::get_NN_sym_new(CAtom *molecules,int center, int &natoms, NNvariables &var){ 
+	//cout << "Hey, I'm get_NN" << endl;
 	double *inputs   = new double [var.input];
 	double *outputs  = new double [var.output];
 	double *gradients=new double [var.output*var.input];
